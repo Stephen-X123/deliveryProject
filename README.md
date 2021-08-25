@@ -1,8 +1,8 @@
-# deliveryProject
+# Delivery Project Overview
 
 哈喽，大家好，来这就没错了
 
-# Directory hierarchy
+# Directory Hierarchy
 - root
 	- DesignDocuments
 	- DeliveryProject-Frontend
