@@ -7,4 +7,4 @@
 	- DesignDocuments
 	- DeliveryProject-Frontend
 
-Note: DeliveryProject-Backend lives at 'ZiyiLiao/DeliveryProject-Backend'
+Note: DeliveryProject-Backend lives at '[ZiyiLiao/DeliveryProject-Backend](https://github.com/ZiyiLiao/DeliveryProject-Backend)'
