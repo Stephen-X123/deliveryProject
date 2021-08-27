@@ -14,7 +14,7 @@ function App() {
         <Header style={{ backgroundColor: "black" }}>
           <Row justify="space-between">
             <Col>
-              <h2 style={{ color: "white" }}>
+              <h2 className="company-name">
                 Owly
               </h2>
             </Col>
@@ -33,6 +33,12 @@ function App() {
               height: 1000,
             }}
           >
+
+            <Row justify="left">
+              <Col>
+                <h2 className="title-text">Ship, manage, track, deliver</h2>
+              </Col>
+            </Row>
           </Content>
         </Layout>
       </Layout>

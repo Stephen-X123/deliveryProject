@@ -5,3 +5,14 @@
   background-size: cover;
   background-repeat: no-repeat;
 }
+
+.title-text {
+  font-size: xx-large;
+  color: white;
+  line-height: 600px;
+}
+
+.company-name {
+  font-size: x-large;
+  color: white;
+}
