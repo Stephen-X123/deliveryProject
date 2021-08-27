@@ -1,6 +1,7 @@
+
 import logo from './logo.svg';
 import './App.css';
-import { Layout } from 'antd';
+import { Layout, Row, Col } from 'antd';
 import Login from './components/Login.js'
 import Register from './components/Register.js'
 import Drone from './backgrounds/Drone.png'
@@ -11,8 +12,17 @@ function App() {
     <>
       <Layout>
         <Header style={{ backgroundColor: "black" }}>
-          <Login />
-          <Register />
+          <Row justify="space-between">
+            <Col>
+              <h2 style={{ color: "white" }}>
+                Owly
+              </h2>
+            </Col>
+            <Col>
+              <Login />
+              <Register />
+            </Col>
+          </Row>
         </Header>
         <Layout>
           <Content

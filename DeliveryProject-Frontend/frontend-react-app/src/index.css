@@ -1,5 +1,7 @@
 @import "~antd/dist/antd.css";
 
 .content-background {
-  background: "./backgrounds/Drone.png";
+  background-image: url("./backgrounds/Drone.png");
+  background-size: cover;
+  background-repeat: no-repeat;
 }
