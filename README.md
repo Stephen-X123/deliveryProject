@@ -19,7 +19,7 @@ Note: DeliveryProject-Backend lives at '[ZiyiLiao/DeliveryProject-Backend](https
 2. Clone your forked repository to local
 3. Add upstream
     * Contribute to the repository if you open in Github desktop (then the upstream is already added)
-    * `git add upstream <this_repo_url>`
+    * `git remote add upstream <this_repo_url>`
     * Check git `git remote -v`
         - Should have 
         ```
