@@ -10,8 +10,8 @@
 Note: DeliveryProject-Backend lives at '[ZiyiLiao/DeliveryProject-Backend](https://github.com/ZiyiLiao/DeliveryProject-Backend)'
 
 # How to start working on this project
-1. npm install
-2. open DeliveryProject-Frontend/front-end-react-app
+1. open DeliveryProject-Frontend/front-end-react-app
+2. npm install 
 3. run the command 'npm start' in your terminal
 
 # How to contribute
