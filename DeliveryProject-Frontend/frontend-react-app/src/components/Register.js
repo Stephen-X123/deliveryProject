@@ -1,14 +1,76 @@
-import React from 'react'
-import { Button } from 'antd'
+import { Button, Form, Input, message, Modal } from 'antd';
+import React from 'react';
+import { LockOutlined, UserOutlined } from '@ant-design/icons';
 
 class Register extends React.Component {
+  state = {
+    displayModal: false
+  }
+ 
+  handleCancel = () => {
+    this.setState({
+      displayModal: false,
+    })
+  }
+
+  onClick = () => {
+    //TODO: request backend, in utils.js.
+    //If backend works proceed.
+    this.setState({
+      displayModal: true,
+    })
+  }
+
+  onFinish = (data) => {
+        console.log(data);
+        message.success(`Successfully signed up!`);
+  }
+
   render() {
     return (
       <>
-        <Button shape="round">
-          Sign up
+        <Button shape="round" onClick={this.onClick}>
+          Sign Up
         </Button>
+        <Modal title="Sign Up" visible={this.state.displayModal} onCancel={this.handleCancel} footer= {null}>
+<Form
+    name="normal_signup"
+    onFinish={this.onFinish}
+    preserve={false}
+  >
+    <Form.Item
+      name="first_name"
+      rules={[{ required: true, message: 'Please input your first name!' }]}
+    >
+      <Input  placeholder="First Name" />
+    </Form.Item>
+    <Form.Item
+      name="last_name"
+      rules={[{ required: true, message: 'Please input your last name!' }]}
+    >
+      <Input placeholder="Last Name" />
+    </Form.Item>
+    <Form.Item
+      name="email"
+      rules={[{ required: true, message: 'Please input your Email!' }]}
+    >
+      <Input placeholder="Email" />
+    </Form.Item>
+    <Form.Item
+      name="password"
+      rules={[{ required: true, message: 'Please input your Password!' }]}
+    >
+      <Input.Password placeholder="Password"/>
+    </Form.Item>
+
+    <Form.Item>
+      <Button type="primary" htmlType="submit">
+        Submit</Button>
+    </Form.Item>
+  </Form>
+</Modal>
       </>
+
     )
   }
 }
