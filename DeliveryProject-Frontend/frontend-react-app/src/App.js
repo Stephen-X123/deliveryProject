@@ -2,9 +2,11 @@ import './App.css';
 import { Layout, Row, Col } from 'antd';
 import Login from './components/Login.js'
 import Register from './components/Register.js'
+import { useState } from 'react';
 const { Header, Content } = Layout
 
 function App() {
+  const [hasLogged, setHasLogged] = useState(false);
   return (
     <>
       <Layout>
@@ -16,8 +18,8 @@ function App() {
               </h2>
             </Col>
             <Col>
-              <Login />
-              <Register />
+            {!hasLogged && <Login onSuccess={() => setHasLogged(true)}/>}
+            {!hasLogged && <Register />}  
             </Col>
           </Row>
         </Header>

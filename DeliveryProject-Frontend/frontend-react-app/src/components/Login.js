@@ -1,10 +1,12 @@
 import { Button, Form, Input, message, Modal } from 'antd';
 import React from 'react';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
+import { login } from "./Utils";
 
 class Login extends React.Component {
   state = {
-    displayModal: false
+    displayModal: false,
+    loading: false
   }
  
   handleCancel = () => {
@@ -22,8 +24,25 @@ class Login extends React.Component {
   }
 
   onFinish = (data) => {
-        console.log(data);
-        message.success(`Welcome back`);
+    this.setState({
+      loading: true,
+    });
+    login(data)
+      .then(() => {
+        message.success(`Login Successful`);
+        this.setState({
+          displayModal: false,
+        })
+        this.props.onSuccess();
+      })
+      .catch((err) => {
+        message.error(err.message);
+      })
+      .finally(() => {
+        this.setState({
+          loading: false,
+        });
+      });
   }
 
   render() {
@@ -36,14 +55,18 @@ class Login extends React.Component {
         >
           Sign In
         </Button>
-        <Modal title="Sign In" visible={this.state.displayModal} onCancel={this.handleCancel} footer= {null}>
+        <Modal 
+          title="Sign In"
+          visible={this.state.displayModal} 
+          onCancel={this.handleCancel} 
+          footer= {null}>
         <Form
             name="normal_login"
             onFinish={this.onFinish}
             preserve={false}
           >
             <Form.Item
-              name="email"
+              name="username"
               rules={[{ required: true, message: 'Please input your Email!' }]}
             >
               <Input prefix={<UserOutlined />} placeholder="Email" />
@@ -60,7 +83,7 @@ class Login extends React.Component {
             </Form.Item>
  
             <Form.Item>
-              <Button type="primary" htmlType="submit">
+              <Button type="primary" htmlType="submit" loading = {this.state.loading}>
                 Submit</Button>
             </Form.Item>
           </Form>
