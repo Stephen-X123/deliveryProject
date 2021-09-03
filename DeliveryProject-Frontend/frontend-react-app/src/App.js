@@ -1,10 +1,7 @@
-
-import logo from './logo.svg';
 import './App.css';
 import { Layout, Row, Col } from 'antd';
 import Login from './components/Login.js'
 import Register from './components/Register.js'
-import Drone from './backgrounds/Drone.png'
 const { Header, Content } = Layout
 
 function App() {
