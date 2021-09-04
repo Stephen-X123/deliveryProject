@@ -1,5 +1,5 @@
 import { Layout, Row, Col } from 'antd';
-import Login from '../components/login';
+import Login from '../components/Login';
 import Register from '../components/Register';
 import { Link } from "react-router-dom";
 import TestContainer from './TestContainer';
