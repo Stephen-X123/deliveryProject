@@ -1,6 +1,7 @@
 import { Button, Form, Input, message, Modal } from 'antd';
 import React from 'react';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
+import { register } from './Utils';
 
 class Register extends React.Component {
   state = {
@@ -22,8 +23,15 @@ class Register extends React.Component {
   }
 
   onFinish = (data) => {
-        console.log(data);
-        message.success(`Successfully signed up!`);
+    register(data)
+      .then(() => {
+        this.setState({
+          displayModal: false,
+        })
+        message.success(`Successfully signed up`);
+      }).catch((err) => {
+        message.error(err.message);
+      })
   }
 
   render() {
@@ -39,13 +47,13 @@ class Register extends React.Component {
     preserve={false}
   >
     <Form.Item
-      name="first_name"
+      name="firstName"
       rules={[{ required: true, message: 'Please input your first name!' }]}
     >
       <Input  placeholder="First Name" />
     </Form.Item>
     <Form.Item
-      name="last_name"
+      name="lastName"
       rules={[{ required: true, message: 'Please input your last name!' }]}
     >
       <Input placeholder="Last Name" />

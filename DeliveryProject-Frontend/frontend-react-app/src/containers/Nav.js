@@ -1,12 +1,15 @@
 import { Layout, Row, Col } from 'antd';
-import Login from '../components/login';
+import Login from '../components/Login';
 import Register from '../components/Register';
 import { Link } from "react-router-dom";
 import TestContainer from './TestContainer';
+import { useState, Content } from 'react';
+
 const { Header } = Layout
 
 
 export default function Nav(){
+    const [hasLogged, setHasLogged] = useState(false);
   return (
     <Header style={{ backgroundColor: "black" }}>
         <Row justify="space-between">
@@ -20,8 +23,8 @@ export default function Nav(){
             </Col>
             <Col>
                 <TestContainer />
-                <Login />
-                <Register />
+                {!hasLogged && <Login onSuccess={() => setHasLogged(true)}/>}
+                {!hasLogged && <Register />}
             </Col>
         </Row>
     </Header>)
