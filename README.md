@@ -10,8 +10,8 @@
 Note: DeliveryProject-Backend lives at '[ZiyiLiao/DeliveryProject-Backend](https://github.com/ZiyiLiao/DeliveryProject-Backend)'
 
 # How to start working on this project
-1. npm install
-2. open DeliveryProject-Frontend/front-end-react-app
+1. open DeliveryProject-Frontend/front-end-react-app
+2. npm install 
 3. run the command 'npm start' in your terminal
 
 # How to contribute
@@ -19,7 +19,7 @@ Note: DeliveryProject-Backend lives at '[ZiyiLiao/DeliveryProject-Backend](https
 2. Clone your forked repository to local
 3. Add upstream
     * Contribute to the repository if you open in Github desktop (then the upstream is already added)
-    * `git add upstream <this_repo_url>`
+    * `git remote add upstream <this_repo_url>`
     * Check git `git remote -v`
         - Should have 
         ```
@@ -27,11 +27,12 @@ Note: DeliveryProject-Backend lives at '[ZiyiLiao/DeliveryProject-Backend](https
         upstream        https://github.com/Stephen-X123/deliveryProject.git (push)
         ```
 4. \[Optional\] Merge upstream to your main branch
-    1. `git checkout upstream/main`
-    2. `git pull`
-    3. `git checkout main`
-    4. `git merge`
-    5. `git push origin`
+    1. `git fetch upstream`
+    2. `git checkout upstream/main`
+    3. `git pull`
+    4. `git checkout main`
+    5. `git merge`
+    6. `git push origin`
 5. Checkout a new branch based on the latest code
     1. `git checkout -b OWLY-<your_name>-<function>-<version>`
     2. Made some changes
