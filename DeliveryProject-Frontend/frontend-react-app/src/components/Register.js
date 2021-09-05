@@ -5,7 +5,8 @@ import { register } from './Utils';
 
 class Register extends React.Component {
   state = {
-    displayModal: false
+    displayModal: false,
+    loading: false
   }
  
   handleCancel = () => {
@@ -23,6 +24,9 @@ class Register extends React.Component {
   }
 
   onFinish = (data) => {
+    this.setState({
+      loading: true
+    });
     register(data)
       .then(() => {
         this.setState({
@@ -32,6 +36,11 @@ class Register extends React.Component {
       }).catch((err) => {
         message.error(err.message);
       })
+      .finally(() => {
+        this.setState({
+          loading: false
+        });
+      });
   }
 
   render() {
@@ -72,7 +81,7 @@ class Register extends React.Component {
     </Form.Item>
 
     <Form.Item>
-      <Button type="primary" htmlType="submit">
+      <Button type="primary" htmlType="submit" loading = {this.state.loading}>
         Submit</Button>
     </Form.Item>
   </Form>

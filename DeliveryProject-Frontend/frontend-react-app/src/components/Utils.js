@@ -37,7 +37,7 @@ export const register = (data) => {
     body: JSON.stringify(data)
   }).then((response) => {
     if (response.status !== 201) {
-      throw Error('Fail to register');
+      throw Error('Fail to register, email has already been registered');
     }
   })
 }
