@@ -1,0 +1,10 @@
+.order-history-background {
+  height: 100vh;
+  background-color: white;
+}
+
+.order-history-title {
+  top: 5%;
+  left: 5%;
+  position: relative;
+}

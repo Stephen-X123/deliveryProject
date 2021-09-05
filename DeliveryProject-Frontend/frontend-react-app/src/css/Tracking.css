@@ -1,0 +1,10 @@
+.tracking-background {
+  height: 100vh;
+  background-color: white;
+}
+
+.tracking-title {
+  top: 10%;
+  left: 5%;
+  position: relative;
+}

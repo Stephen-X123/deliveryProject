@@ -1,0 +1,10 @@
+.profile-history-background {
+  height: 100vh;
+  background-color: white;
+}
+
+.profile-title {
+  top: 10%;
+  left: 5%;
+  position: relative;
+}

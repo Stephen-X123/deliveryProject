@@ -1,0 +1,25 @@
+/*
+  Main page styles
+*/
+.slogan-text {
+  font-size: xx-large;
+  color: white;
+  position: absolute;
+  top: 40%;
+  left: 5%;
+}
+
+.ordering {
+  position: absolute;
+  top: 47%;
+  left: 5%;
+}
+
+.company-name {
+  font-size: x-large;
+  color: white;
+}
+
+.order-text-field {
+  width: 400px;
+}
