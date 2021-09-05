@@ -13,6 +13,7 @@ const { Header } = Layout
 
 export default function Nav() {
     const [hasLogged, setHasLogged] = useState(false);
+    console.log(hasLogged);
     return (
         <Header className="header">
             <Row justify="space-between">
@@ -25,12 +26,15 @@ export default function Nav() {
 
                 </Col>
                 <Col>
-                    <TestContainer />
                     {!hasLogged && <Login onSuccess={() => setHasLogged(true)} />}
                     {!hasLogged && <Register />}
-                    {hasLogged && <OrderButton />}
-                    {hasLogged && <UserDropdown />}
+                    {hasLogged &&
+                        <Row>
+                            <UserDropdown username="Johnson" logout={() => setHasLogged(false)} />
+                            <OrderButton />
+                        </Row>
+                    }
                 </Col>
             </Row>
-        </Header>)
+        </Header >)
 }

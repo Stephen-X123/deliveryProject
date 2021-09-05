@@ -10,7 +10,7 @@ class TestContainer extends React.Component {
       <Link to="/test">
         <Button
           shape="round"
-          style={{ marginRight: '20px' }}
+          style={{ marginRight: '0px' }}
         >
           Test Router
         </Button>
