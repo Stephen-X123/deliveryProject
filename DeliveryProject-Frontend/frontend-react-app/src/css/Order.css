@@ -1,0 +1,6 @@
+.order-background {
+  background-image: url("../backgrounds/OrderBackground.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: calc(100vh);
+}
