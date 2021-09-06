@@ -26,7 +26,7 @@ export default class UserDropdown extends React.Component {
                 </Menu.Item>
                 <Link to="/">
                   <Menu.Item onClick={this.props.logout}>
-                    signOut
+                    Sign out
                   </Menu.Item>
                 </Link>
               </SubMenu>

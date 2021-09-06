@@ -9,7 +9,9 @@ export default class OrderButton extends React.Component {
   render() {
     return (
       <Link to="/orderhistory">
-        <Button shape="round" className="orderbutton">
+        <Button shape="round" className="orderbutton" onClick={() => {
+          this.props.setOrderHistory("orderHistory")
+        }}>
           Orders
         </Button >
       </Link >
