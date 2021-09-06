@@ -4,3 +4,10 @@
   background-repeat: no-repeat;
   height: calc(100vh);
 }
+
+.steps {
+  position: relative;
+  height: calc(30vh);
+  left: calc(5vh);
+  top: 10vh;
+}
