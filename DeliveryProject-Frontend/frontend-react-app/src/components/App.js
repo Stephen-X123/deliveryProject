@@ -12,6 +12,7 @@ import Tracking from './Tracking'
 import Order from './Order'
 import OrderHistory from './OrderHistory'
 import Profile from './Profile'
+import OrderDetails from './OrderDetails'
 
 
 export default function App() {
@@ -21,6 +22,7 @@ export default function App() {
             <Route path="/orderhistory" component={OrderHistory} />
             <Route path="/tracking" component={Tracking} />
             <Route path="/order" component={Order} />
+            <Route path="/orderdetails" component={OrderDetails} />
             <Route path="/test" component={Test} />
             <Route path="/" component={Main} />
         </Switch>
