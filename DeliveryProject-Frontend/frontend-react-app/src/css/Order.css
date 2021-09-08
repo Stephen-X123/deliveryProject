@@ -1,5 +1,5 @@
 .order-background {
-  background-image: url("../backgrounds/OrderBackground.png");
+  /*background-image: url("../backgrounds/OrderBackground.png");*/
   background-size: cover;
   background-repeat: no-repeat;
   height: calc(100vh);
@@ -10,4 +10,18 @@
   height: calc(30vh);
   left: calc(5vh);
   top: 10vh;
+}
+
+.form {
+  position: absolute;
+  left: calc(40vw);
+  top: 20vh;
+}
+
+.medium-field {
+  background-color: #dcdcdc;
+  position: relative;
+  top: 0vh;
+  height: 7vh;
+  width: 20vw;
 }
