@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
     BrowserRouter as Router,
     Switch,
@@ -16,15 +16,18 @@ import OrderDetails from './OrderDetails'
 
 
 export default function App() {
+
+    const [orderId, setOrderId] = useState()
+
     const routes = () => {
         return <Switch>
             <Route path="/profile" component={Profile} />
             <Route path="/orderhistory" component={OrderHistory} />
-            <Route path="/tracking" component={Tracking} />
+            <Route path="/tracking" render={() => <Tracking orderId={orderId}/>} />
             <Route path="/order" component={Order} />
             <Route path="/orderdetails" component={OrderDetails} />
             <Route path="/test" component={Test} />
-            <Route path="/" component={Main} />
+            <Route path="/" render={() => <Main setOrderId={setOrderId}/>} />
         </Switch>
     }
 
