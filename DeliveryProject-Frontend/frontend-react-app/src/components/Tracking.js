@@ -12,7 +12,8 @@ import { SHIPPING_STATUS_INDEX } from "../constants/trackingConstants";
 export default class Tracking extends React.Component {
 
   renderStatus = (data) => {
-    const {shipmentStatus} = data;
+    const {shipmentStatus, order} = data;
+    const {orderId} = order;
     const steps = SHIPPING_STATUS_INDEX[shipmentStatus];
     let orderIconColor = "limegreen";
     let shipIconColor = "lightgray";
@@ -29,7 +30,7 @@ export default class Tracking extends React.Component {
       <>
         <div className="tracking-background">
           <h1 className="tracking-title">
-            Track package
+            Track package #{orderId}
           </h1>
         </div>
         <div className="tracking-graph">
