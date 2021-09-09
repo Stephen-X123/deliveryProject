@@ -8,3 +8,22 @@
   left: 5%;
   position: relative;
 }
+
+.tracking-content{
+  margin: 15% 5%;
+}
+
+
+.tracking-status{
+  display: flex;
+  flex-direction: row;
+}
+
+.tracking-history{
+  margin-top: 10%
+}
+
+.ant-list{
+  margin-right: 5%;
+}
+

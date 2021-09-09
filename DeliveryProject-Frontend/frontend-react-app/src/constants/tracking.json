@@ -1,6 +1,6 @@
 {
     "trackingId": "tracking01",
-    "shipmentStatus": "DELIVERED",
+    "shipmentStatus": "SHIPPED",
     "station": {
         "stationId": "station001",
         "stationName": "station name 001",
