@@ -1,6 +1,6 @@
 import '../css/Main.css'
 import { Link } from "react-router-dom"
-
+import { EnvironmentOutlined } from "@ant-design/icons";
 import { Button, Input, Layout, Row, Col } from 'antd';
 import React from 'react';
 const { Content } = Layout
@@ -17,8 +17,9 @@ export default class Main extends React.Component {
     currentPage: this.constants.main,
   }
 
-  toTracking = () => {
-
+  onInputChange = (e) => {
+    const { setOrderId } = this.props;
+    setOrderId(e.target.value);
   }
 
   render() {
@@ -35,11 +36,14 @@ export default class Main extends React.Component {
         <h2 className="slogan-text">Ship, manage, track, deliver</h2>
         <Row className="ordering" gutter={16}>
           <Col>
-            <Input className="order-text-field" placeholder="Enter your order number here"></Input>
+            <Input  className="order-text-field"
+                    placeholder="Enter your order number here"
+                    prefix={<EnvironmentOutlined />}
+                    onChange={this.onInputChange}/>
           </Col>
           <Col>
             <Link to="/tracking">
-              <Button className="business-button" onClick={this.toTracking}>Track your order</Button>
+              <Button className="business-button">Track your order</Button>
             </Link>
           </Col>
           <Col>
