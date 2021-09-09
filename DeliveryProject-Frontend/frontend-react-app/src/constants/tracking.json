@@ -1,0 +1,28 @@
+{
+    "trackingId": "tracking01",
+    "shipmentStatus": "SHIPPED",
+    "station": {
+        "stationId": "station001",
+        "stationName": "station name 001",
+        "street": "Apt 8, owly street",
+        "city": "San Francisco",
+        "zipcode": "94123"
+    },
+    "vehicle": {
+        "vehicleID" : "vehicle 001",
+        "vehicleName" : "vehicle name",
+        "vehicleType" : "DRONE"
+    },
+    "order": {
+        "orderId": "1111",
+        "recipientName" : "Harry Potter",
+        "fromAddress": "Apt 9, owly street, SF, CA, 94124",
+        "toAddress": "Apt 10, owly street, SF, CA, 94125",
+        "actualPickUpTime" : 1631035815,
+        "createTime" :1631021415,
+        "departTime" : 1631028615,
+        "desiredPickedUpTime": 1631035815,
+        "deliveryTime": 1631039415,
+        "shippingTime": 1631037615
+    }
+} 

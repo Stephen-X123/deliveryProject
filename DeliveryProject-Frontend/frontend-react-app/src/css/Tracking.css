@@ -1,10 +1,39 @@
 .tracking-background {
-  height: 100vh;
+  height: 10vh;
   background-color: white;
 }
 
 .tracking-title {
   top: 10%;
   left: 5%;
-  position: relative;
+  position: absolute;
+}
+
+.tracking-graph{
+  margin-left: 10%;
+  margin-right: 10%;
+  padding-left: 5vw;
+  padding-right: 5vw;
+  padding-top: 1vh;
+  padding-bottom: 3vh;
+}
+
+.tracking-progress-icons{
+  display:flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tracking-progress-text{
+  display:flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 3%;
+  padding-right: 3%;
+}
+
+.tracking-history{
+  padding-left: 5vw;
 }
