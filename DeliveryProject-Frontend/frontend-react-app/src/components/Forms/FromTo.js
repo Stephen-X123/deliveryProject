@@ -107,9 +107,42 @@ export default class FromTo extends React.Component {
     },
   ]
 
-  onFinish = (props) => {
+  onFinish = (form) => {
+    form.month = form.date.month();
+    form.dayOfMonth = form.date.date();
+    form.hour = form.hour[0];
+    form.minute = form.minute[0];
+    form.day = '2021-' + form.month + '-' + form.dayOfMonth + 'T' + form.hour + ':' + form.minute + ':00';
     this.props.setState({
-      'fromTo': props
+      Order: form
+    });
+    this.props.incrementPage(1);
+  }
+
+  testOrder = () => {
+    this.props.setState({
+      Order: {
+        date: '2021-09-10T12:27:49',
+        weight: '10-30kg',
+        size: '50cm x 50cm x 50cm - 1m x 1m x 1m',
+        fromAddress: '800 N Alameda St, Los Angeles, CA 90012',
+        toAddress: '453 S Spring St, Los Angeles, CA 90013',
+        totalCost: '30.00',
+        orderStatus: 'Ordered',
+        hour: '12',
+        minute: '27',
+        day: '10',
+        month: '9'
+      },
+      CreditCard: {
+        address: "SF 123",
+        cardNumber: "10101010",
+        expirationDate: "01/25",
+        firstName: "Ni",
+        lastName: "Hao",
+        zipCode: "11111",
+        cvv: "111"
+      },
     });
     this.props.incrementPage(1);
   }
@@ -252,6 +285,7 @@ export default class FromTo extends React.Component {
         </Row>
         <Form.Item style={{ left: '5vw', position: 'relative' }}>
           <Button type="primary" htmlType="submit" style={{ width: '10vw ' }}>Next</Button>
+          <Button type="button" style={{ marginLeft: '10vw' }} onClick={this.testOrder}>Test Order</Button>
         </Form.Item>
       </this.Form >
     );

@@ -17,9 +17,9 @@ export default class Order extends React.Component {
         <FromTo incrementPage={this.incrementPage} setState={this.updateState} />,
         <PaymentInfo incrementPage={this.incrementPage} setState={this.updateState} />,
         <Confirmation setState={this.updateState} completeForm={this.completeForm}
-          fromTo={this.state.fromTo} droneOrRobot={this.state.droneOrRobot} />
+          order={this.state.Order} droneOrRobot={this.state.droneOrRobot} />
       ],
-      formComplete: true,
+      formComplete: false,
     }
   }
 
@@ -35,16 +35,10 @@ export default class Order extends React.Component {
   }
 
   updateState = (newState) => {
-    this.setState(
-      {
-        ...newState,
-        forms: [
-          <FromTo incrementPage={this.incrementPage} setState={this.updateState} />,
-          <PaymentInfo incrementPage={this.incrementPage} setState={this.updateState} />,
-          <Confirmation setState={this.updateState} completeForm={this.completeForm} fromTo={this.state.fromTo} />
-        ]
-      }
-    )
+    console.log('updatestate', newState);
+    console.log('old state', this.state);
+    this.setState(newState);
+    console.log('after set state', this.state)
   }
 
   fromToForm2 =
@@ -64,20 +58,34 @@ export default class Order extends React.Component {
   onChange = (newCurrent) => {
     this.setState({
       current: newCurrent,
-    })
+    });
+    if (newCurrent >= 2) {
+      this.setState({
+        forms: [
+          <FromTo incrementPage={this.incrementPage} setState={this.updateState} />,
+          <PaymentInfo incrementPage={this.incrementPage} setState={this.updateState} />,
+          <Confirmation setState={this.updateState} completeForm={this.completeForm} order={this.state.Order} />
+        ]
+      });
+      console.log('>=2')
+    }
   }
 
   incrementPage = (increment) => {
     this.setState({
       current: this.state.current + increment,
-    })
-  }
-
-  onFinish = () => {
-
+    });
+    this.setState({
+      forms: [
+        <FromTo incrementPage={this.incrementPage} setState={this.updateState} />,
+        <PaymentInfo incrementPage={this.incrementPage} setState={this.updateState} />,
+        <Confirmation setState={this.updateState} completeForm={this.completeForm} order={this.state.Order} />
+      ]
+    });
   }
 
   render() {
+
     const { forms, current, formComplete } = this.state;
     return (
       !formComplete ?
