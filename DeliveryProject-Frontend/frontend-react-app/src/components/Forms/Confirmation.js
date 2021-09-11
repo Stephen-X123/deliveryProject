@@ -13,11 +13,11 @@ export default class Confirmation extends React.Component {
   }
 
   render() {
-    console.log(this.props.fromTo)
+    console.log('props', this.props)
     const {
-      hour, minute, sendingName, sendingAddress, sendingPhone, receivingName, receivingAddress, receivingPhone,
+      month, dayOfMonth, hour, minute, fromAddress, toAddress, receivingPhone,
       date
-    } = this.props.fromTo
+    } = this.props.order
     const {
       droneOrRobot
     } = this.props
@@ -35,11 +35,7 @@ export default class Confirmation extends React.Component {
           </Col>
           <Col>
             <h4 style={{ fontWeight: '200' }}>
-              {sendingName}
-              <br />
-              {sendingPhone}
-              <br />
-              {sendingAddress}
+              {fromAddress}
             </h4>
           </Col>
         </Row>
@@ -51,11 +47,7 @@ export default class Confirmation extends React.Component {
           </Col>
           <Col>
             <h4 style={{ fontWeight: '200' }}>
-              {receivingName}
-              <br />
-              {receivingPhone}
-              <br />
-              {receivingAddress}
+              {toAddress}
             </h4>
           </Col>
         </Row>
@@ -80,7 +72,7 @@ export default class Confirmation extends React.Component {
             </h2>
           </Col>
           <Col style={{ position: 'relative', top: '0.5vh' }}>
-            {date.month()}/{date.day()} {hour}:{minute}
+            {month}/{dayOfMonth} {hour}:{minute}
           </Col>
         </Row>
         <Row justify="space-between">
