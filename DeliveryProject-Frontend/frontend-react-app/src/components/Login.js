@@ -8,7 +8,7 @@ class Login extends React.Component {
     displayModal: false,
     loading: false
   }
- 
+
   handleCancel = () => {
     this.setState({
       displayModal: false,
@@ -24,6 +24,7 @@ class Login extends React.Component {
   }
 
   onFinish = (data) => {
+    this.props.setUsername(data);
     this.setState({
       loading: true,
     });
@@ -55,12 +56,12 @@ class Login extends React.Component {
         >
           Sign In
         </Button>
-        <Modal 
+        <Modal
           title="Sign In"
-          visible={this.state.displayModal} 
-          onCancel={this.handleCancel} 
-          footer= {null}>
-        <Form
+          visible={this.state.displayModal}
+          onCancel={this.handleCancel}
+          footer={null}>
+          <Form
             name="normal_login"
             onFinish={this.onFinish}
             preserve={false}
@@ -79,11 +80,11 @@ class Login extends React.Component {
                 prefix={<LockOutlined />}
                 placeholder="Password"
               />
-              
+
             </Form.Item>
- 
+
             <Form.Item>
-              <Button type="primary" htmlType="submit" loading = {this.state.loading}>
+              <Button type="primary" htmlType="submit" loading={this.state.loading}>
                 Submit</Button>
             </Form.Item>
           </Form>

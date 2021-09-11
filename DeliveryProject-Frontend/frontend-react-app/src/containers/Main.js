@@ -1,7 +1,7 @@
 import '../css/Main.css'
 import { Link } from "react-router-dom"
 import { RightSquareOutlined } from "@ant-design/icons";
-import { Button, Input, Layout, Row, Col } from 'antd';
+import { Button, Input, Layout, Row, Col, message } from 'antd';
 import React from 'react';
 const { Content } = Layout
 
@@ -20,6 +20,14 @@ export default class Main extends React.Component {
   onInputChange = (e) => {
     const { setOrderId } = this.props;
     setOrderId(e.target.value);
+  }
+
+  //check if logged in, if not logged in send a message
+  //let the user know you cannot click orders without logging in
+  onClick = () => {
+    if (!this.props.loggedIn) {
+      message.error('Cannot check order history without logging in!');
+    }
   }
 
   render() {
@@ -45,7 +53,7 @@ export default class Main extends React.Component {
           </Col>
           <Col>
             <Link to="/order">
-              <Button className="business-button">Order Now</Button>
+              <Button className="business-button" onClick={this.onClick}>Order Now</Button>
             </Link>
           </Col>
         </Row>

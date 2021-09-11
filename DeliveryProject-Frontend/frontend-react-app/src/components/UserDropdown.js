@@ -14,14 +14,24 @@ export default class UserDropdown extends React.Component {
           <span style={{ whiteSpace: 'nowrap', marginRight: '20px' }}>
             <Menu mode="horizontal" className="menu" theme="white">
               <SubMenu title={this.greeting}>
-                <Menu.Item>
+                {/* <Menu.Item>
                   <Link to="/profile">
                     Edit Profile
                   </Link>
+                </Menu.Item> */}
+                <Menu.Item>
+                  <Link to={{
+                    pathname: '/orderhistory',
+                    state: {
+                      username:this.props.username
+                    }
+                  }}>
+                    Orders
+                  </Link>
                 </Menu.Item>
                 <Menu.Item>
-                  <Link to="/orderhistory">
-                    Orders
+                  <Link to="/">
+                    Main Page
                   </Link>
                 </Menu.Item>
                 <Link to="/">
