@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import {
     BrowserRouter as Router,
     Switch,
-    Route
+    Route,
+    Redirect
 } from "react-router-dom";
 
 import Main from '../containers/Main';
@@ -18,23 +19,31 @@ import OrderDetails from './OrderDetails'
 export default function App() {
 
     const [orderId, setOrderId] = useState()
+    const [username, setUsername] = useState()
+    const [loggedIn, setLoggedIn] = useState(false)
 
     const routes = () => {
         return <Switch>
             <Route path="/profile" component={Profile} />
-            <Route path="/orderhistory" component={OrderHistory} />
-            <Route path="/tracking" render={() => <Tracking orderId={orderId}/>} />
-            <Route path="/order" component={Order} />
+            <Route path="/orderhistory" component={OrderHistory}>
+                {loggedIn ? "/orderhistory" : <Redirect to="/" />}
+            </Route>
+            <Route path="/tracking" render={() => <Tracking orderId={orderId} />} />
+            <Route path="/order" component={Order}>
+                {loggedIn ? <Order /> : <Redirect to="/" />}
+            </Route>
             <Route path="/orderdetails" component={OrderDetails} />
             <Route path="/test" component={Test} />
-            <Route path="/" render={() => <Main setOrderId={setOrderId}/>} />
+            <Route path="/" render={() => <Main setOrderId={setOrderId} loggedIn={loggedIn}/>} />
         </Switch>
     }
 
     return (
         <Router>
             <div>
-                <Nav />
+                <Nav setUsername={setUsername} 
+                setLoggedIn={setLoggedIn} 
+                />
                 {routes()}
             </div>
         </Router>
