@@ -21,10 +21,10 @@ export const login = (credential) => {
       "Content-Type": "application/json",
     },
     credentials: "include",
-    }).then((response) => {
-      if (response.status < 200 || response.status >= 300) {
-        throw Error("Fail to log in");
-      }
+  }).then((response) => {
+    if (response.status < 200 || response.status >= 300) {
+      throw Error("Fail to log in");
+    }
   });
 };
 
@@ -39,5 +39,21 @@ export const register = (data) => {
     if (response.status !== 201) {
       throw Error('Fail to register, email has already been registered');
     }
+  })
+}
+
+
+export const order = (data) => {
+  return fetch(`/order`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data)
+  }).then((response) => {
+    if (response.status !== 200) {
+      throw Error('Fail to order');
+    };
+    return response.json();
   })
 }
