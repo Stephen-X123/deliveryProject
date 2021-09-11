@@ -1,11 +1,12 @@
 import React from "react";
 import '../css/Order.css';
-import { Steps, Form, Input, Row } from 'antd';
+import { Steps, Form, Input, Row, message } from 'antd';
 import FromTo from './Forms/FromTo';
 import PaymentInfo from './Forms/PaymentInfo'
 import Confirmation from './Forms/Confirmation'
 import OrderComplete from "./Forms/OrderComplete";
-const { Step } = Steps
+import { order } from "./Utils"
+const { Step } = Steps;
 
 export default class Order extends React.Component {
 
@@ -28,10 +29,57 @@ export default class Order extends React.Component {
     current: 0,
   }
 
+  // @Id
+  // private long cardNumber;
+  // private int userID;
+  // private String firstName;
+  // private String expirationDate;
+  // private int cvv;
+  // private String lastName;
+  // private String zipCode;
+  // private String address;
   completeForm = () => {
-    this.setState({
-      formComplete: true
+    const { date, fromAddress, orderStatus, size, toAddress, totalCost, weight } = this.state.Order;
+
+    this.state.CreditCard.cvv = parseInt(this.state.CreditCard.cvv)
+    console.log('order to backend', {
+      order: {
+        actualPickUpTime: date,
+        fromAddress: fromAddress,
+        orderStatus, orderStatus,
+        size: size,
+        toAddress: toAddress,
+        totalCost: totalCost,
+        weight: weight
+      },
+      credit_card: this.state.CreditCard
     })
+    order({
+      order: {
+        actualPickUpTime: date,
+        fromAddress: fromAddress,
+        orderStatus, orderStatus,
+        size: size,
+        toAddress: toAddress,
+        totalCost: totalCost,
+        weight: weight
+      },
+      credit_card: this.state.CreditCard
+    }).then(
+      (data) => {
+        this.setState({
+          orderId: data
+        })
+        this.setState({
+          formComplete: true
+        });
+        message.success('Order complete!')
+      }
+    ).catch(
+      (err) => {
+        message.error(err.message)
+      }
+    )
   }
 
   updateState = (newState) => {
@@ -100,7 +148,7 @@ export default class Order extends React.Component {
               forms[current]
             }
           </div>
-        </div> : <OrderComplete setState={this.updateState} />
+        </div> : <OrderComplete setState={this.updateState} orderId={this.state.orderId} />
     )
   }
 }

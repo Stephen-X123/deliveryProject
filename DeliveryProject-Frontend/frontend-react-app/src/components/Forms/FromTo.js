@@ -159,7 +159,7 @@ export default class FromTo extends React.Component {
         </Form.Item>
         <Form.Item
           rules={[{ required: true, message: 'Please enter the sending address.' }]}
-          name="trackAddress"
+          name="fromAddress"
         >
           <Input placeholder="Address"
             style={wideinput}
@@ -191,7 +191,7 @@ export default class FromTo extends React.Component {
             style={wideinput}
           />
         </Form.Item>
-        <Form layout="inline" style={smallVertMargin}>
+        <Row justify="space-between" style={{ width: '20vw' }}>
           <Form.Item
             rules={[{ required: true, message: 'Please enter the receiver\'s name.' }]}
             name="recipientName"
@@ -203,7 +203,7 @@ export default class FromTo extends React.Component {
           <Form.Item name="receivingPhone">
             <Input placeholder="Phone" style={mediuminput} />
           </Form.Item>
-        </Form>
+        </Row>
         <Form.Item>
           <h2 style={negVertMargin}>
             Package Information
@@ -266,7 +266,8 @@ export default class FromTo extends React.Component {
             Pickup time
           </h2>
         </Form.Item>
-        <Form.Item dropdownClassName="datePicker" name="date">
+        <Form.Item dropdownClassName="datePicker" name="date"
+          rules={[{ required: true, message: 'Please choose a date.' }]}>
           <DatePicker style={wideinput} />
         </Form.Item>
         <Row justify="space-between" style={{ width: '20vw' }}>
