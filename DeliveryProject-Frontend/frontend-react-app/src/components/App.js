@@ -26,7 +26,7 @@ export default function App() {
         return <Switch>
             <Route path="/profile" component={Profile} />
             <Route path="/orderhistory" render={() => <OrderHistory username={username} />}>
-                {loggedIn ? "/orderhistory" : <Redirect to="/" />}
+                {loggedIn ? <OrderHistory username={username} /> : <Redirect to="/" />}
             </Route>
             <Route path="/tracking" render={() => <Tracking orderId={orderId} />} />
             <Route path="/order" component={Order}>
@@ -34,15 +34,16 @@ export default function App() {
             </Route>
             <Route path="/orderdetails" component={OrderDetails} />
             <Route path="/test" component={Test} />
-            <Route path="/" render={() => <Main setOrderId={setOrderId} loggedIn={loggedIn}/>} />
+            <Route path="/" render={() => <Main setOrderId={setOrderId} loggedIn={loggedIn} />} />
         </Switch>
     }
 
     return (
         <Router>
             <div>
-                <Nav setUsername={setUsername} 
-                setLoggedIn={setLoggedIn} 
+                <Nav setUsername={setUsername}
+                    setLoggedIn={setLoggedIn}
+                    username={username}
                 />
                 {routes()}
             </div>

@@ -20,7 +20,7 @@ export default class OrderComplete extends React.Component {
         </Row>
         <Row>
           <h3 style={{ position: 'relative', left: '1.5vw' }}>
-            Order number: {this.props.orderId}
+            Order number: 2340815798
           </h3>
         </Row >
         <Row>

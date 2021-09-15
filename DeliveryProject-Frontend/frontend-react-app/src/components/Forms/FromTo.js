@@ -239,7 +239,7 @@ export default class FromTo extends React.Component {
                   Delivery fee: ${droneDeliveryFee}
                 </h5>
                 <h5 style={{ ...this.droneRobotTextStyle, marginLeft: '5vw', paddingTop: '-2vh' }}>
-                  Estimated Delivery fee: {droneNewTime}
+                  Estimated Delivery Time: {droneNewTime}
                 </h5>
               </Col>
             </Row>
@@ -266,8 +266,7 @@ export default class FromTo extends React.Component {
             Pickup time
           </h2>
         </Form.Item>
-        <Form.Item dropdownClassName="datePicker" name="date"
-          rules={[{ required: true, message: 'Please choose a date.' }]}>
+        <Form.Item dropdownClassName="datePicker" name="date">
           <DatePicker style={wideinput} />
         </Form.Item>
         <Row justify="space-between" style={{ width: '20vw' }}>

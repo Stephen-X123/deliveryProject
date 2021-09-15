@@ -60,7 +60,7 @@ export default class Nav extends React.Component {
                         {!isLoggedIn && <Register />}
                         {isLoggedIn &&
                             <Row>
-                                <UserDropdown logout={this.flipLogin} />
+                                <UserDropdown logout={this.flipLogin} username={this.props.username}/>
                                 {(page !== "orderHistory") && <OrderButton setOrderHistory={this.setPage} />}
                                 {(page === "orderHistory") &&
                                     <Link to="/">
