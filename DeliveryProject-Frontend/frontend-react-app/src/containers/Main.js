@@ -26,7 +26,7 @@ export default class Main extends React.Component {
   //let the user know you cannot click orders without logging in
   onClick = () => {
     if (!this.props.loggedIn) {
-      message.error('Cannot check order history without logging in!');
+      message.error('Please log in before ordering!');
     }
   }
 

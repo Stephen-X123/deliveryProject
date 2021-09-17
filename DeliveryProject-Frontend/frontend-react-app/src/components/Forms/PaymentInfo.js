@@ -22,7 +22,7 @@ export default class PaymentInfo extends React.Component {
     console.log(values)
     this.props.setState(
       {
-        "creditCard": values
+        CreditCard: values
       });
     this.props.incrementPage(1);
   }
@@ -65,6 +65,7 @@ export default class PaymentInfo extends React.Component {
           </Form.Item>
           <Form.Item
             rules={[{ required: true, message: 'Please enter the cvv.' }]}
+            name="cvv"
           >
             <Input placeholder="cvv" />
           </Form.Item>

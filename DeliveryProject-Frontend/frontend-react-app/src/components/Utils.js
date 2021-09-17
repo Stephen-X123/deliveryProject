@@ -68,12 +68,13 @@ export const orderHistory = (userID) => {
     })
 }
 
-export const tracking = (orderID) => {
-  return fetch(`/tracking?orderID=${orderID}`, {}).
-    then((response) => {
-      if (response.status < 200 || response.status >= 300) {
-        throw Error('Fail to tracking');
-      };
-      return response.json();
-    })
+export const getUser = () => {
+  return fetch('/user',{
+    credentials: 'include'
+  }).then((response) => {
+    if (response.status < 200 || response.status >= 300) {
+      throw Error('Fail to order');
+    };
+    return response.json();
+  })
 }

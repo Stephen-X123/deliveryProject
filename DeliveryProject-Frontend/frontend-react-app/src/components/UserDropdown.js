@@ -1,19 +1,53 @@
 import React from 'react'
-import { Button, Menu, Row } from 'antd'
+import { getUser } from './Utils'
+import { Spin, Button, Menu, message, Row } from 'antd'
 import { Link } from 'react-router-dom'
 import '../css/UserDropDown.css'
 const { SubMenu } = Menu
 export default class UserDropdown extends React.Component {
 
-  greeting = `Welcome back, ${this.props.username}`
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: null,
+    };
+  }
+
+  getUsername = () => {
+    getUser().then(
+      (user) => {
+        var name = user.firstName + " " + user.lastName;
+        this.setState({
+          username: name,
+        })
+      }
+    ).catch(
+      (err) => {
+        message.error(err.message)
+      }
+    );
+  }
+
+  componentDidMount() {
+    this.getUsername();
+  }
+
+  renderloading = () => {
+    return <Spin tip="Loading..." className="order-history-loading" />
+  }
 
   render() {
+    const { username } = this.state;
+    if (username == null) {
+      return this.renderloading();
+    }
+    var greeting = `Welcome back, ${username}`
     return (
       <>
         {
-          <span style={{ whiteSpace: 'nowrap', marginRight: '20px' }}>
+          <span style={{ marginRight: '2vw', width: '7vw' }}>
             <Menu mode="horizontal" className="menu" theme="white">
-              <SubMenu title={this.greeting}>
+              <SubMenu title={greeting}>
                 {/* <Menu.Item>
                   <Link to="/profile">
                     Edit Profile
@@ -21,10 +55,7 @@ export default class UserDropdown extends React.Component {
                 </Menu.Item> */}
                 <Menu.Item>
                   <Link to={{
-                    pathname: '/orderhistory',
-                    state: {
-                      username:this.props.username
-                    }
+                    pathname: '/orderhistory'
                   }}>
                     Orders
                   </Link>

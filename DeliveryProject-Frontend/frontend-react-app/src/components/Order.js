@@ -39,18 +39,18 @@ export default class Order extends React.Component {
   // private String zipCode;
   // private String address;
   completeForm = () => {
-    const { date, fromAddress, orderStatus, size, toAddress, totalCost, weight } = this.state.Order;
+    const { date, fromAddress, orderStatus, size, toAddress, totalCost, packageWeight } = this.state.Order;
 
     this.state.CreditCard.cvv = parseInt(this.state.CreditCard.cvv)
     console.log('order to backend', {
       order: {
         actualPickUpTime: date,
         fromAddress: fromAddress,
-        orderStatus, orderStatus,
-        size: size,
+        orderStatus: 'Ordered',
+        size: size[0],
         toAddress: toAddress,
         totalCost: totalCost,
-        weight: weight
+        weight: packageWeight[0],
       },
       credit_card: this.state.CreditCard
     })
@@ -58,22 +58,22 @@ export default class Order extends React.Component {
       order: {
         actualPickUpTime: date,
         fromAddress: fromAddress,
-        orderStatus, orderStatus,
-        size: size,
+        orderStatus: 'Ordered',
+        size: size[0],
         toAddress: toAddress,
         totalCost: totalCost,
-        weight: weight
+        weight: packageWeight[0],
       },
       credit_card: this.state.CreditCard
     }).then(
       (data) => {
         this.setState({
-          orderId: data
-        })
-        this.setState({
           formComplete: true
         });
-        message.success('Order complete!')
+        message.success('Order complete!');
+        this.setState({
+          orderId: data
+        });
       }
     ).catch(
       (err) => {
@@ -112,7 +112,7 @@ export default class Order extends React.Component {
         forms: [
           <FromTo incrementPage={this.incrementPage} setState={this.updateState} />,
           <PaymentInfo incrementPage={this.incrementPage} setState={this.updateState} />,
-          <Confirmation setState={this.updateState} completeForm={this.completeForm} order={this.state.Order} />
+          <Confirmation setState={this.updateState} completeForm={this.completeForm} order={this.state.Order} orderId={this.state.orderId} />
         ]
       });
       console.log('>=2')
@@ -127,7 +127,7 @@ export default class Order extends React.Component {
       forms: [
         <FromTo incrementPage={this.incrementPage} setState={this.updateState} />,
         <PaymentInfo incrementPage={this.incrementPage} setState={this.updateState} />,
-        <Confirmation setState={this.updateState} completeForm={this.completeForm} order={this.state.Order} />
+        <Confirmation setState={this.updateState} completeForm={this.completeForm} order={this.state.Order} orderId={this.state.orderId} />
       ]
     });
   }
@@ -148,7 +148,7 @@ export default class Order extends React.Component {
               forms[current]
             }
           </div>
-        </div> : <OrderComplete setState={this.updateState} orderId={this.state.orderId} />
+        </div> : <OrderComplete setState={this.updateState} />
     )
   }
 }

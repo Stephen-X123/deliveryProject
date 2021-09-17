@@ -24,7 +24,7 @@ class Login extends React.Component {
   }
 
   onFinish = (data) => {
-    this.props.setUsername(data);
+    this.props.setUsername(data.username);
     this.setState({
       loading: true,
     });
