@@ -36,9 +36,15 @@ export default class Tracking extends React.Component {
         <div className="tracking-graph">
           <div className="tracking-progress-icons">
             <OrderIcon className="tracking-order-icon" fill={orderIconColor} width='100' height='100' />
-            <ArrowRightOutlined style={{ fontSize: 50, color: orderIconColor }} />
+            <ArrowRightOutlined style={{ fontSize: 25, color: orderIconColor }} />
+            <ArrowRightOutlined style={{ fontSize: 25, color: orderIconColor }} />
+            <ArrowRightOutlined style={{ fontSize: 25, color: orderIconColor }} />
+            <ArrowRightOutlined style={{ fontSize: 25, color: orderIconColor }} />
             <ShipIcon className="tracking-ship-icon" fill={shipIconColor} width='100' height='100' />
-            <ArrowRightOutlined style={{ fontSize: 50, color: shipIconColor }} />
+            <ArrowRightOutlined style={{ fontSize: 25, color: shipIconColor }} />
+            <ArrowRightOutlined style={{ fontSize: 25, color: shipIconColor }} />
+            <ArrowRightOutlined style={{ fontSize: 25, color: shipIconColor }} />
+            <ArrowRightOutlined style={{ fontSize: 25, color: shipIconColor }} />
             <DeliverIcon className="tracking-deliver-icon" fill={deliverIconColor} width='100' height='100' />
           </div>
           <div className="tracking-progress-text">
