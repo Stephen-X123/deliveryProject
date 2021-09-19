@@ -45,9 +45,9 @@ export default class UserDropdown extends React.Component {
     return (
       <>
         {
-          <span style={{ marginRight: '2vw', width: '7vw' }}>
-            <Menu mode="horizontal" className="menu" theme="white">
-              <SubMenu title={greeting}>
+          <span style={{ marginRight: '2vw', width: '12vw' }}>
+            <Menu mode="horizontal" className="menu" theme="dark" >
+              <SubMenu title={greeting} style={{ width: '8vw' }}>
                 {/* <Menu.Item>
                   <Link to="/profile">
                     Edit Profile

@@ -21,6 +21,7 @@ export default class Order extends React.Component {
           order={this.state.Order} droneOrRobot={this.state.droneOrRobot} />
       ],
       formComplete: false,
+      testing: false
     }
   }
 
@@ -39,31 +40,33 @@ export default class Order extends React.Component {
   // private String zipCode;
   // private String address;
   completeForm = () => {
-    const { date, fromAddress, orderStatus, size, toAddress, totalCost, packageWeight } = this.state.Order;
+    console.log('Order Here:', this.state.Order)
+    const { date, fromAddress, orderStatus, size, toAddress, totalCost, packageWeight,
+      sendingName, sendingPhone, receivingPhone, recipientName } = this.state.Order;
 
     this.state.CreditCard.cvv = parseInt(this.state.CreditCard.cvv)
+    const newOrder = {
+      actualPickUpTime: date,
+      fromAddress: fromAddress,
+      orderStatus: 'Ordered',
+      size: this.state.testing ? size : size[0],
+      toAddress: toAddress,
+      totalCost: totalCost,
+      weight: this.state.testing ? this.state.Order.weight : packageWeight[0],
+      senderName: sendingName,
+      senderPhoneNumber: sendingPhone,
+      recipientName: recipientName,
+      recipientPhoneNumber: receivingPhone,
+      deliveryMethod: this.state.droneOrRobot,
+      estimatedDeliveryTime: this.state.estimatedDeliveryTime,
+      totalCost: this.state.totalCost
+    };
     console.log('order to backend', {
-      order: {
-        actualPickUpTime: date,
-        fromAddress: fromAddress,
-        orderStatus: 'Ordered',
-        size: size[0],
-        toAddress: toAddress,
-        totalCost: totalCost,
-        weight: packageWeight[0],
-      },
+      order: newOrder,
       credit_card: this.state.CreditCard
     })
     order({
-      order: {
-        actualPickUpTime: date,
-        fromAddress: fromAddress,
-        orderStatus: 'Ordered',
-        size: size[0],
-        toAddress: toAddress,
-        totalCost: totalCost,
-        weight: packageWeight[0],
-      },
+      order: newOrder,
       credit_card: this.state.CreditCard
     }).then(
       (data) => {
@@ -83,10 +86,10 @@ export default class Order extends React.Component {
   }
 
   updateState = (newState) => {
-    console.log('updatestate', newState);
-    console.log('old state', this.state);
+    //console.log('updatestate', newState);
+    //console.log('old state', this.state);
     this.setState(newState);
-    console.log('after set state', this.state)
+    //console.log('after set state', this.state)
   }
 
   fromToForm2 =

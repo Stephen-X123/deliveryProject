@@ -56,6 +56,9 @@ export default class FromTo extends React.Component {
     this.props.setState({
       droneOrRobot: "robot"
     })
+    this.setState({
+      isDrone: false
+    })
   }
 
   //https://stackoverflow.com/questions/1197928/how-to-add-30-minutes-to-a-javascript-date-object
@@ -63,7 +66,10 @@ export default class FromTo extends React.Component {
     droneDeliveryFee: 30,
     robotDeliveryFee: 20,
     droneNewTime: moment(new Date()).add(20, 'm').format('hh:mm'),
-    robotNewTime: moment(new Date()).add(30, 'm').format('hh:mm')
+    robotNewTime: moment(new Date()).add(30, 'm').format('hh:mm'),
+    droneDeliveryTime: moment(new Date()).add(60, 'm').format('hh:mm'),
+    robotDeliveryTime: moment(new Date()).add(120, 'm').format('hh:mm'),
+    isDrone: true
   }
 
   //https://stackoverflow.com/questions/56782898/how-to-reduce-spacing-between-antd-form-items
@@ -116,10 +122,39 @@ export default class FromTo extends React.Component {
     this.props.setState({
       Order: form
     });
+    this.props.setState({
+      testing: false
+    });
+    if (this.state.isDrone){
+      this.props.setState({
+        estimatedDeliveryTime: this.state.robotDeliveryFee,
+        totalCost: this.state.robotDeliveryFee
+      })
+    }
+    else {
+      this.props.setState({
+        estimatedDeliveryTime: this.state.droneDeliveryTime,
+        totalCost: this.state.droneDeliveryFee
+      })
+    }
     this.props.incrementPage(1);
   }
 
   testOrder = () => {
+    console.log('order to', {
+      date: '2021-09-10T12:27:49',
+      weight: '10-30kg',
+      size: '50cm x 50cm x 50cm - 1m x 1m x 1m',
+      fromAddress: '800 N Alameda St, Los Angeles, CA 90012',
+      toAddress: '453 S Spring St, Los Angeles, CA 90013',
+      totalCost: '30.00',
+      orderStatus: 'Ordered',
+      hour: '12',
+      minute: '27',
+      day: '10',
+      month: '9',
+      ...this.state
+    })
     this.props.setState({
       Order: {
         date: '2021-09-10T12:27:49',
@@ -132,7 +167,8 @@ export default class FromTo extends React.Component {
         hour: '12',
         minute: '27',
         day: '10',
-        month: '9'
+        month: '9',
+        ...this.state
       },
       CreditCard: {
         address: "SF 123",
@@ -144,6 +180,9 @@ export default class FromTo extends React.Component {
         cvv: "111"
       },
     });
+    this.props.setState({
+      testing: true
+    })
     this.props.incrementPage(1);
   }
 
