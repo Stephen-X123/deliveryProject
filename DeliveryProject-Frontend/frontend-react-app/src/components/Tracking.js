@@ -27,9 +27,17 @@ export default class Tracking extends React.Component {
   updateState = () => {
     getTracking(this.props.orderId).then(
       (response) => {
+        console.log('response', response);
+        response.order.createTime /= 1000;
+        response.order.actualPickUpTime /= 1000;
+        response.order.deliveryTime /= 1000;
         this.setState({
           data: response
-        })
+        });
+        const oldData = this.state.data;
+        this.setState({
+          data: oldData,
+        });
       }
     ).catch(
       (err) => {
@@ -91,6 +99,8 @@ export default class Tracking extends React.Component {
 
   renderHistory = (data) => {
     const historys = helpers.historyTracker(data);
+    console.log('historys', historys);
+    console.log('data', data);
     return (
       <div className="tracking-history">
         <h2>Tracking History</h2>
@@ -117,7 +127,7 @@ export default class Tracking extends React.Component {
     const { data } = this.state;
     if (data == null) {
       return this.renderloading()
-    } else if (data[0] == undefined) {
+    } else if (data == undefined) {
       console.log('wrong order number')
       return (
         <><div>Order not found. Please go back to home page and re-enter the order number</div><>
@@ -131,11 +141,11 @@ export default class Tracking extends React.Component {
     return (
       <>
         <div>
-          {renderStatus(this.state.data[0])}
+          {renderStatus(this.state.data)}
         </div>
         <Row>
           <Col span={16}>
-            {renderHistory(this.state.data[0])}
+            {renderHistory(this.state.data)}
           </Col>
           <Col span={8}>
             {renderShippingInfo()}

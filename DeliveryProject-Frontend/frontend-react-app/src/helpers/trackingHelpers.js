@@ -24,30 +24,33 @@ import moment from "moment";
 // private String Review;
 // private String orderStatus;
 
-const trackerHelper = ({ item, index, order}) => {
+const trackerHelper = ({ item, index, order }) => {
     const Comp = item;
     const status = INVERTED_SHIPPING_STATUS_INDEX[index];
     const message = SHIPPING_STATUS[status];
     const timeField = SHIPPING_STATUS_TIME[status];
     const time = moment.unix(_.get(order, `${timeField}`)).format('YYYY-MM-DD HH:mm:ss');
-    return <Comp time={time} message={message}/>
+    return <Comp time={time} message={message} />
 }
 
 
-const historyItem = ({time, message}) => {
+const historyItem = ({ time, message }) => {
     return <div>
-                <div>{time}</div>
-                <div>Your package has been {message}</div>
-            </div>
+        <div>{time}</div>
+        <div>Your package has been {message}</div>
+    </div>
 }
 
 
-const historyTracker = ({shipmentStatus, order}) => {
+const historyTracker = ({ shipmentStatus, order }) => {
     const historys = [];
-    const steps = SHIPPING_STATUS_INDEX[shipmentStatus];
-    for(let i = 0; i <= steps; i++){
-       const item = trackerHelper({item: historyItem, index: i, order})
-       historys.push(item);
+    var steps = SHIPPING_STATUS_INDEX[shipmentStatus];
+    steps = 3;
+    for (let i = 0; i <= steps; i++) {
+        if (i != 2) {
+            const item = trackerHelper({ item: historyItem, index: i, order })
+            historys.push(item);
+        }
     }
     return historys;
 }
