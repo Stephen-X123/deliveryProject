@@ -25,8 +25,8 @@ export default function App() {
     const routes = () => {
         return <Switch>
             <Route path="/profile" component={Profile} />
-            <Route path="/orderhistory" render={() => <OrderHistory username={username} />}>
-                {loggedIn ? <OrderHistory username={username} /> : <Redirect to="/" />}
+            <Route path="/orderhistory" render={() => <OrderHistory username={username} setOrderId={setOrderId} />}>
+                {loggedIn ? <OrderHistory username={username} setOrderId={setOrderId} /> : <Redirect to="/" />}
             </Route>
             <Route path="/tracking" render={() => <Tracking orderId={orderId} />} />
             <Route path="/order" component={Order}>

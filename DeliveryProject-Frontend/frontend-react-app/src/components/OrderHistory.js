@@ -108,7 +108,7 @@ class OrderHistory extends React.Component {
                   </span>
                   <span>
                     <Col>
-                      <Link to="/tracking">
+                      <Link to="/tracking" onClick={() => this.props.setOrderId(item.orderId)}>
                         <h5 style={{ color: 'blue' }}>
                           Track My Order
                         </h5>
