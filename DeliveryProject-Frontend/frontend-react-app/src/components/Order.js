@@ -151,7 +151,7 @@ export default class Order extends React.Component {
               forms[current]
             }
           </div>
-        </div> : <OrderComplete setState={this.updateState} />
+        </div> : <OrderComplete setState={this.updateState} orderId={this.state.orderId} />
     )
   }
 }
