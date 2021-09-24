@@ -3,29 +3,61 @@ import '../css/Tracking.css'
 import { ReactComponent as OrderIcon } from '../icons/OrderIcon.svg';
 import { ReactComponent as ShipIcon } from '../icons/ShipIcon.svg';
 import { ReactComponent as DeliverIcon } from '../icons/DeliverIcon.svg';
-import data from "../constants/tracking.json";
+// import data from "../constants/tracking.json";
+import { Link } from "react-router-dom";
 import helpers from "../helpers/trackingHelpers";
-import { Row, Col, List, Typography } from "antd";
+import { Button, Row, Col, List, Spin, message } from "antd";
 import { ArrowRightOutlined } from "@ant-design/icons"
 import { SHIPPING_STATUS_INDEX } from "../constants/trackingConstants";
+import { getTracking } from "./Utils";
 
 export default class Tracking extends React.Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: null
+    }
+  }
+
+  componentDidMount() {
+    this.updateState();
+  }
+
+  updateState = () => {
+    getTracking(this.props.orderId).then(
+      (response) => {
+        this.setState({
+          data: response
+        })
+      }
+    ).catch(
+      (err) => {
+        message.error(err.message);
+        console.error(err);
+      }
+    )
+  }
+
+  renderloading = () => {
+    return <Spin tip="Loading..." className="tracking-loading" />
+  }
+
   renderStatus = (data) => {
-    const {shipmentStatus, order} = data;
-    const {orderId} = order;
+    const { shipmentStatus, order } = data;
+    const { orderId } = order;
     const steps = SHIPPING_STATUS_INDEX[shipmentStatus];
     let orderIconColor = "limegreen";
     let shipIconColor = "lightgray";
     let deliverIconColor = "lightgray";
-    if(steps<2) { 
-    } else if(steps==2){
+    if (steps < 2) {
+    } else if (steps == 2) {
       shipIconColor = "limegreen";
     } else {
       shipIconColor = "limegreen";
       deliverIconColor = "limegreen";
     }
-    
+
     return (
       <>
         <div className="tracking-background">
@@ -48,9 +80,9 @@ export default class Tracking extends React.Component {
             <DeliverIcon className="tracking-deliver-icon" fill={deliverIconColor} width='100' height='100' />
           </div>
           <div className="tracking-progress-text">
-            <b style={{ color: {orderIconColor} }}>Ordered</b>
-            <b style={{ color: {shipIconColor} }}>Shipped</b>
-            <b style={{ color: {deliverIconColor} }}>Delivered</b>
+            <b style={{ color: { orderIconColor } }}>Ordered</b>
+            <b style={{ color: { shipIconColor } }}>Shipped</b>
+            <b style={{ color: { deliverIconColor } }}>Delivered</b>
           </div>
         </div>
       </>
@@ -82,14 +114,28 @@ export default class Tracking extends React.Component {
 
   render() {
     const { renderStatus, renderHistory, renderShippingInfo } = this;
+    const { data } = this.state;
+    if (data == null) {
+      return this.renderloading()
+    } else if (data[0] == undefined) {
+      console.log('wrong order number')
+      return (
+        <><div>Order not found. Please go back to home page and re-enter the order number</div><>
+          <Link to="/">
+            <Button className="business-button">Home page</Button>
+          </Link>
+        </></>
+      );
+    }
+    console.log('order found. success')
     return (
       <>
         <div>
-          {renderStatus(data)}
+          {renderStatus(this.state.data[0])}
         </div>
         <Row>
           <Col span={16}>
-            {renderHistory(data)}
+            {renderHistory(this.state.data[0])}
           </Col>
           <Col span={8}>
             {renderShippingInfo()}
