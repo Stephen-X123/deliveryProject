@@ -10,13 +10,15 @@ import { Button, Row, Col, List, Spin, message } from "antd";
 import { ArrowRightOutlined } from "@ant-design/icons"
 import { SHIPPING_STATUS_INDEX } from "../constants/trackingConstants";
 import { getTracking } from "./Utils";
+import sorryImage from '../dejavu/sorryImage.jpeg';
 
 export default class Tracking extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      data: null
+      data: null, 
+      errorFlag: false
     }
   }
 
@@ -38,11 +40,16 @@ export default class Tracking extends React.Component {
         this.setState({
           data: oldData,
         });
+        const { setOrderId } = this.props;
+        setOrderId(null);
       }
     ).catch(
       (err) => {
-        message.error(err.message);
+        // message.error(err.message);
         console.error(err);
+        this.setState({
+          errorFlag: true
+        });
       }
     )
   }
@@ -99,8 +106,8 @@ export default class Tracking extends React.Component {
 
   renderHistory = (data) => {
     const historys = helpers.historyTracker(data);
-    console.log('historys', historys);
-    console.log('data', data);
+    // console.log('historys', historys);
+    // console.log('data', data);
     return (
       <div className="tracking-history">
         <h2>Tracking History</h2>
@@ -124,20 +131,21 @@ export default class Tracking extends React.Component {
 
   render() {
     const { renderStatus, renderHistory, renderShippingInfo } = this;
-    const { data } = this.state;
-    if (data == null) {
+    const { data, errorFlag } = this.state;
+    if (data === null && errorFlag === false) {
       return this.renderloading()
-    } else if (data == undefined) {
+    } else if (errorFlag === true) {
       console.log('wrong order number')
       return (
-        <><div>Order not found. Please go back to home page and re-enter the order number</div><>
-          <Link to="/">
-            <Button className="business-button">Home page</Button>
+        <>
+        <img className="wrong-tracking-img" src={sorryImage} alt="Sorry, order not found" width="400" height="400" />
+        <div style={{textAlign: "center", fontSize: "2em"}}>Order not found. Please go back to home page and re-enter the order number.</div>
+          <Link to="/" style={{position: 'absolute', left: '46%'}}>
+            <Button>Home page</Button>
           </Link>
-        </></>
+        </>
       );
     }
-    console.log('order found. success')
     return (
       <>
         <div>
@@ -151,6 +159,9 @@ export default class Tracking extends React.Component {
             {renderShippingInfo()}
           </Col>
         </Row>
+        <Link to="/" style={{position: 'absolute', left: '46%'}}>
+            <Button>Home page</Button>
+          </Link>
       </>
     );
   }
