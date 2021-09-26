@@ -37,3 +37,11 @@
 .tracking-history{
   padding-left: 5vw;
 }
+
+.wrong-tracking-img{
+  display: block;
+  margin-top: 2vh;
+  margin-bottom: 2vh;
+  margin-left: auto;
+  margin-right: auto;
+}

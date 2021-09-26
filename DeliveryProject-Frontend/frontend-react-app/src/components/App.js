@@ -28,7 +28,7 @@ export default function App() {
             <Route path="/orderhistory" render={() => <OrderHistory username={username} setOrderId={setOrderId} />}>
                 {loggedIn ? <OrderHistory username={username} setOrderId={setOrderId} /> : <Redirect to="/" />}
             </Route>
-            <Route path="/tracking" render={() => <Tracking orderId={orderId} />} />
+            <Route path="/tracking" render={() => <Tracking orderId={orderId} setOrderId={setOrderId} />} />
             <Route path="/order" component={Order}>
                 {loggedIn ? <Order /> : <Redirect to="/" />}
             </Route>
