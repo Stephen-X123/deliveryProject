@@ -82,7 +82,7 @@ export default class FromTo extends React.Component {
   }`;
 
   droneRobotTextStyle = {
-    fontWeight: '200', paddingLeft: '1vw'
+    fontWeight: '200'
   }
 
   //arrays for dropdown size + weight
@@ -116,6 +116,12 @@ export default class FromTo extends React.Component {
     },
   ]
 
+  /*
+    Add form from first page basic (non credit card) order information to Order.js,
+    and flip to next page.
+    Text inputs are stored in Order field of Order.js's state, 
+    dropdown information and other pieces of information are stored in other fields.
+  */
   onFinish = (form) => {
     form.month = form.date.month();
     form.dayOfMonth = form.date.date();
@@ -125,19 +131,22 @@ export default class FromTo extends React.Component {
     this.props.setState({
       Order: form
     });
+    //If not testing Order will not generate fake data, and will take user input.
+    //If testing, it will generate fake data for testing purposes.
     this.props.setState({
       testing: false
     });
+    //Send drone + robot information to Order. DeliveryFee + Time
     if (this.state.isDrone) {
       this.props.setState({
-        estimatedDeliveryTime: this.state.robotDeliveryFee,
-        totalCost: this.state.robotDeliveryFee
+        estimatedDeliveryTime: this.state.droneDeliveryTime,
+        totalCost: this.state.droneDeliveryFee
       })
     }
     else {
       this.props.setState({
-        estimatedDeliveryTime: this.state.droneDeliveryTime,
-        totalCost: this.state.droneDeliveryFee
+        estimatedDeliveryTime: this.state.robotDeliveryTime,
+        totalCost: this.state.robotDeliveryFee
       })
     }
     this.props.incrementPage(1);
@@ -278,32 +287,34 @@ export default class FromTo extends React.Component {
           </h2>
         </Form.Item>
         <Form.Item>
-          <Button type="button" className="medium-field" style={{ ...smallVertMargin }} onClick={this.chooseDrone}>
+          <Button type="button" className="medium-field" style={{ ...smallVertMargin }} onClick={this.chooseDrone}
+          style = {{height: "fit-content"}}>
             <Row>
-              <h2 style={{ ...this.droneRobotTextStyle, top: '1.5vh', position: 'relative' }}>
+              <h2 style={{ ...this.droneRobotTextStyle }}>
                 Drone
               </h2>
-              <Col style={{ positon: 'relative', top: '-3vh' }}>
-                <h5 style={{ ...this.droneRobotTextStyle, marginLeft: '5vw', paddingTop: '0vh' }}>
+              <Col style={{ positon: 'relative'}}>
+                <h5 style={{ ...this.droneRobotTextStyle}}>
                   Delivery fee: ${droneDeliveryFee}
                 </h5>
-                <h5 style={{ ...this.droneRobotTextStyle, marginLeft: '5vw', paddingTop: '-2vh' }}>
+                <h5 style={{ ...this.droneRobotTextStyle}}>
                   Estimated Delivery Time: {droneNewTime}
                 </h5>
               </Col>
             </Row>
           </Button>
           <br />
-          <Button type="button" className="medium-field" style={{ ...smallVertMargin }} onClick={this.chooseRobot}>
+          <Button type="button" className="medium-field" style={{ ...smallVertMargin }} onClick={this.chooseRobot}
+          style = {{height: "fit-content", marginTop: '1.5vh'}}>
             <Row>
-              <h2 style={{ ...this.droneRobotTextStyle, top: '1.5vh', position: 'relative' }}>
+              <h2 style={{ ...this.droneRobotTextStyle}}>
                 Robot
               </h2>
-              <Col style={{ positon: 'relative', top: '-3vh' }}>
-                <h5 style={{ ...this.droneRobotTextStyle, marginLeft: '5vw' }}>
+              <Col style={{ positon: 'relative'}}>
+                <h5 style={{ ...this.droneRobotTextStyle}}>
                   Delivery fee: ${robotDeliveryFee}
                 </h5>
-                <h5 style={{ ...this.droneRobotTextStyle, marginLeft: '5vw', paddingTop: '-2vh' }}>
+                <h5 style={{ ...this.droneRobotTextStyle}}>
                   Estimated Delivery Time: {robotNewTime}
                 </h5>
               </Col>

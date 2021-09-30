@@ -17,27 +17,9 @@ export default class Tracking extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: null,
+      data: null, 
       errorFlag: false
     }
-    this.changeStatus();
-  }
-
-  changeStatus = () => {
-    setInterval(() => {
-      console.log(new Date());
-      if (this.state.data != null) {
-        const { order } = this.state.data;
-        const pickUpTime = order.actualPickUpTime;
-        const deliveryTime = order.deliveryTime;
-        const pickUpDate = new Date(pickUpTime / 1000);
-        const deliveryDate = new Date(deliveryTime);
-        console.log('order', order);
-        console.log("actual pick up:" + order.actualPickUpTime);
-        console.log("delivery time:" + order.deliveryTime);
-        console.log("pick up date:" + pickUpDate);
-      }
-    }, 1000)
   }
 
   componentDidMount() {
@@ -156,9 +138,9 @@ export default class Tracking extends React.Component {
       console.log('wrong order number')
       return (
         <>
-          <img className="wrong-tracking-img" src={sorryImage} alt="Sorry, order not found" width="400" height="400" />
-          <div style={{ textAlign: "center", fontSize: "2em" }}>Order not found. Please go back to home page and re-enter the order number.</div>
-          <Link to="/" style={{ position: 'absolute', left: '46%' }}>
+        <img className="wrong-tracking-img" src={sorryImage} alt="Sorry, order not found" width="400" height="400" />
+        <div style={{textAlign: "center", fontSize: "2em"}}>Order not found. Please go back to home page and re-enter the order number.</div>
+          <Link to="/" style={{position: 'absolute', left: '46%'}}>
             <Button>Home page</Button>
           </Link>
         </>
@@ -177,9 +159,9 @@ export default class Tracking extends React.Component {
             {renderShippingInfo()}
           </Col>
         </Row>
-        <Link to="/" style={{ position: 'absolute', left: '46%' }}>
-          <Button>Home page</Button>
-        </Link>
+        <Link to="/" style={{position: 'absolute', left: '46%'}}>
+            <Button>Home page</Button>
+          </Link>
       </>
     );
   }

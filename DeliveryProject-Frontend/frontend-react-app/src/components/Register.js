@@ -4,6 +4,7 @@ import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { register } from './Utils';
 
 class Register extends React.Component {
+  //Please refer to Login.js comments
   state = {
     displayModal: false,
     loading: false
