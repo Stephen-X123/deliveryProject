@@ -4,14 +4,19 @@ import '../../css/Order.css';
 
 export default class Confirmation extends React.Component {
 
+  //Go backward by one page (to 2) if you click back
   flipBackwards = () => {
     this.props.incrementPage(-1);
   }
 
+  //Complete form and set up Order.js to send to backend.
   onClick = () => {
     this.props.completeForm();
   }
 
+  //Form info passed through this.props.order by Order.js 
+  //Display to user so they can check the info is correct. 
+  //If not they can go back to the 0th or 1st page to edit the info.
   render() {
     console.log('props', this.props)
     const {
@@ -27,6 +32,7 @@ export default class Confirmation extends React.Component {
           Please confirm your order
         </h2>
 
+        {/* Rows to place info label and info side by side. */}
         <Row justify="space-between">
           <Col>
             <h2>

@@ -1,81 +1,176 @@
 import React from "react";
-import { List, Row, Col, Button } from 'antd';
+import { List, Row, Col, Button, Spin } from 'antd';
 import { Link } from "react-router-dom";
-const data = [
-    {'order_number' : "364179604",
-    'created_time' : "08:00 AM 08/23/2021",
-    'sender' : "Rick Sun",
-    'sender_telphone': "949-123-4567",
-    'sender_address': "800 N Alameda St, Los Angeles, CA, 90012",
-    'receiver' : "Sean",
-    'receiver_telephone' :'946-666-6666',
-    'receiver_address' : '453 Spring Street, Los Angeles, CA 90013',
-    'actual_pick_up_time' : "08:00 AM 08/24/2021",
-    'size' : "Small (L : 10 , W : 10, H : 10)",
-    'weight' : "Light (< 5 lb)",
-    'deliveror' : "Drone",
-    'deliver_time' : "9:00 AM",
-    'fee' : "30"}
-    ];
+import moment from "moment";
+import Map from "./MapDirectionsRenderer";
+import Geocode from "react-geocode";
+import MapDirectionsRenderer from "./MapDirectionsRenderer";
+import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps"
+import { isVar } from "@babel/types";
+
+
+// const data1 = [
+//     {'order_number' : "364179604",
+//     'created_time' : "08:00 AM 08/23/2021",
+//     'sender' : "Rick Sun",
+//     'sender_telphone': "949-123-4567",
+//     'sender_address': "800 N Alameda St, Los Angeles, CA, 90012",
+//     'receiver' : "Sean",
+//     'receiver_telephone' :'946-666-6666',
+//     'receiver_address' : '453 Spring Street, Los Angeles, CA 90013',
+//     'actual_pick_up_time' : "08:00 AM 08/24/2021",
+//     'size' : "Small (L : 10 , W : 10, H : 10)",
+//     'weight' : "Light (< 5 lb)",
+//     'deliveror' : "Drone",
+//     'deliver_time' : "9:00 AM",
+//     'fee' : "30"}
+//     ];
+
 
 export default class OrderDetails extends React.Component {
-    
-    render(){
+
+    getdata = () => {
+        return this.props.location.state
+    }
+
+    componentDidMount() {
+        console.log("mounting...");
+        Geocode.setApiKey("AIzaSyAPerW4DlNN3JvRMUkGesnBFi6HBwpMbDs");
+
+        // set response language. Defaults to english.
+        Geocode.setLanguage("en");
+        // Get latitude & longitude from address.
+        Geocode.fromAddress(this.props.location.state.fromAddress).then(
+            (response) => {
+                const { lat, lng } = response.results[0].geometry.location;
+                console.log('lat long', typeof (lat), typeof (lng));
+                this.setState(
+                    () => {
+                        return { places: [{ latitude: lat, longitude: lng }] };
+                    }
+                )
+            },
+            (error) => {
+                console.error(error);
+            }
+        );
+        Geocode.fromAddress(this.props.location.state.toAddress).then(
+            (response) => {
+                const { lat, lng } = response.results[0].geometry.location;
+                this.setState(() => {
+                    return { places: [...this.state.places, { latitude: lat, longitude: lng }] };
+                })
+            },
+            (error) => {
+                console.error(error);
+            }
+        );
+    }
+
+    state = {
+        places: [
+        ]
+    }
+
+    renderloading = () => {
+        //provide loading circle and center it in the page.
+        return <Spin tip="Loading..." className="order-history-loading" style={{ marginTop: '45vw', marginLeft: '45vh' }} />
+    }
+
+    render() {
+        console.log('response');
+        var mapUrl = "https://maps.googleapis.com/maps/api/js?"
+        const key = "AIzaSyAPerW4DlNN3JvRMUkGesnBFi6HBwpMbDs"
+        mapUrl += "&key=" + key;
+        this.getdata();
+        var data = this.getdata();
+        data = [data];
+        console.log('data', data);
+
+        var { places } = this.state;
+        if (places.length < 2) {
+            return this.renderloading()
+        }
         return (
             <>
-                
                 <List
-        style = {{marginTop: '10vh', borderColor : 'transparent'}}
-        size="large"
-        //header={<div><h3 style = {{left : '10vw', position : 'absolute', marginBottom : '30vh', top : '0vh'}}>Order History</h3></div>}
-        bordered
-        dataSource={data}
-        renderItem={item => <div style = {{width : '45vw' , height : '80vh', backgroundColor : 'whitesmoke', 
-        marginTop : '-1vh', borderRadius : '0px', left : '10vw', position : "absolute"}}><List.Item>{
-          <>
-            <h1 style = {{left : '2vw', position : 'absolute', top : '5vh'}}>Order Details</h1>
-            
-            <h3 style = {{left : '2vw', position : 'absolute', top : '13vh'}}><b>Order Number</b></h3>
-            <h4 style = {{left : '17vw', position : 'absolute', top : '13vh'}}>{item.order_number}</h4>
+                    style={{ marginTop: '10vh', borderColor: 'transparent' }}
+                    size="large"
+                    //header={<div><h3 style = {{left : '10vw', position : 'absolute', marginBottom : '30vh', top : '0vh'}}>Order History</h3></div>}
+                    bordered
+                    dataSource={data}
+                    renderItem={item => <div style={{
+                        width: '45vw', height: '80vh', backgroundColor: 'whitesmoke',
+                        marginTop: '-1vh', borderRadius: '0px', left: '5vw', position: "absolute"
+                    }}><List.Item>{
+                        <>
+                            <h1 style={{ left: '2vw', position: 'absolute', top: '5vh' }}>Order Details</h1>
 
-            <h3 style = {{left : '2vw', position : 'absolute', top : '18vh'}}><b>Created Time</b></h3>
-            <h4 style = {{left : '17vw', position : 'absolute', top : '18vh'}}>{item.created_time}</h4>
+                            <h3 style={{ left: '2vw', position: 'absolute', top: '13vh' }}><b>Order Number</b></h3>
+                            <h4 style={{ left: '17vw', position: 'absolute', top: '13vh' }}>{item.orderId}</h4>
 
-            <h3 style = {{left : '2vw', position : 'absolute', top : '23vh'}}><b>From</b></h3>
-            <h4 style = {{left : '17vw', position : 'absolute', top : '23vh'}}>{item.sender}</h4>
-            <h4 style = {{left : '17vw', position : 'absolute', top : '27vh'}}>{item.sender_telphone}</h4>
-            <h4 style = {{left : '17vw', position : 'absolute', top : '31vh'}}>{item.sender_address}</h4>
+                            <h3 style={{ left: '2vw', position: 'absolute', top: '18vh' }}><b>Created Time</b></h3>
+                            <h4 style={{ left: '17vw', position: 'absolute', top: '18vh' }}>{moment.unix(item.createTime / 1000).format("MM/DD/YYYY HH:mm")}</h4>
 
-            <h3 style = {{left : '2vw', position : 'absolute', top : '36vh'}}><b>To</b></h3>
-            <h4 style = {{left : '17vw', position : 'absolute', top : '36vh'}}>{item.receiver}</h4>
-            <h4 style = {{left : '17vw', position : 'absolute', top : '40vh'}}>{item.receiver_telephone}</h4>
-            <h4 style = {{left : '17vw', position : 'absolute', top : '44vh'}}>{item.receiver_address}</h4>
+                            <h3 style={{ left: '2vw', position: 'absolute', top: '23vh' }}><b>From</b></h3>
+                            <h4 style={{ left: '17vw', position: 'absolute', top: '23vh' }}>{item.senderName}</h4>
+                            <h4 style={{ left: '17vw', position: 'absolute', top: '27vh' }}>{item.senderPhoneNumber}</h4>
+                            <h4 style={{ left: '17vw', position: 'absolute', top: '31vh' }}>{item.fromAddress}</h4>
 
-            <h3 style = {{left : '2vw', position : 'absolute', top : '49vh'}}><b>Size</b></h3>
-            <h4 style = {{left : '17vw', position : 'absolute', top : '49vh'}}>{item.size}</h4>
+                            <h3 style={{ left: '2vw', position: 'absolute', top: '36vh' }}><b>To</b></h3>
+                            <h4 style={{ left: '17vw', position: 'absolute', top: '36vh' }}>{item.recipientName}</h4>
+                            <h4 style={{ left: '17vw', position: 'absolute', top: '40vh' }}>{item.recipientPhoneNumber}</h4>
+                            <h4 style={{ left: '17vw', position: 'absolute', top: '44vh' }}>{item.toAddress}</h4>
 
-            <h3 style = {{left : '2vw', position : 'absolute', top : '54vh'}}><b>Weight</b></h3>
-            <h4 style = {{left : '17vw', position : 'absolute', top : '54vh'}}>{item.weight}</h4>
+                            <h3 style={{ left: '2vw', position: 'absolute', top: '49vh' }}><b>Size</b></h3>
+                            <h4 style={{ left: '17vw', position: 'absolute', top: '49vh' }}>{item.size}</h4>
 
-            <h3 style = {{left : '2vw', position : 'absolute', top : '59vh'}}><b>By</b></h3>
-            <h4 style = {{left : '17vw', position : 'absolute', top : '59vh'}}>{item.deliveror}</h4>
+                            <h3 style={{ left: '2vw', position: 'absolute', top: '54vh' }}><b>Weight</b></h3>
+                            <h4 style={{ left: '17vw', position: 'absolute', top: '54vh' }}>{item.weight}</h4>
 
-            <h3 style = {{left : '2vw', position : 'absolute', top : '64vh'}}><b>Deliver Time</b></h3>
-            <h4 style = {{left : '17vw', position : 'absolute', top : '64vh'}}>{item.deliver_time}</h4>
+                            <h3 style={{ left: '2vw', position: 'absolute', top: '59vh' }}><b>By</b></h3>
+                            <h4 style={{ left: '17vw', position: 'absolute', top: '59vh' }}>{item.deliveryMethod}</h4>
 
-            <h3 style = {{left : '2vw', position : 'absolute', top : '69vh'}}><b>Fee</b></h3>
-            <h4 style = {{left : '17vw', position : 'absolute', top : '69vh'}}>$ {item.fee}</h4>
+                            <h3 style={{ left: '2vw', position: 'absolute', top: '64vh' }}><b>Deliver Time</b></h3>
+                            <h4 style={{ left: '17vw', position: 'absolute', top: '64vh' }}>{moment.unix(item.deliveryTime / 1000).format("MM/DD/YYYY HH:mm")}</h4>
 
-            
-         
+                            <h3 style={{ left: '2vw', position: 'absolute', top: '69vh' }}><b>Fee</b></h3>
+                            <h4 style={{ left: '17vw', position: 'absolute', top: '69vh' }}>$ {item.totalCost}</h4>
 
-          
-          </>
-          }</List.Item></div>}
-        />
 
+
+
+
+                        </>
+                    }</List.Item></div>}
+                />
+                {places.length >= 2 &&
+                    <Map
+                        googleMapURL={
+                            'https://maps.googleapis.com/maps/api/js?key=' +
+                            key +
+                            '&libraries=geometry,drawing,places'
+                        }
+
+                        // arr.slice(Math.max(arr.length - 5, 1))
+                        markers={places}
+                        loadingElement={<div style={{ height: `100%` }} />}
+                        containerElement={<div style={{ height: "45vh", width: "40vw", marginLeft: '55vw' }} />}
+                        mapElement={<div style={{ height: `100%` }} />}
+                        defaultCenter={{ lat: 37, lng: -122 }}
+                        defaultZoom={7 || 11}
+                    />}
             </>
         )
-
     }
 }
+
+/*<MyMapComponent
+
+            isMarkerShown
+            googleMapURL={mapUrl}
+            loadingElement={<div style={{ height: `100%` }} />}
+            containerElement={<div style={{ height: `400px`, width: `40vw`, marginLeft: '55vw' }} />}
+            mapElement={<div style={{ height: `100%` }} />}
+             />
+             */

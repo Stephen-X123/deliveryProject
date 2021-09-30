@@ -8,6 +8,7 @@ export default class FromTo extends React.Component {
 
   constructor(props) {
     super(props)
+    //initialize hours and minutes for dropdown
     for (var i = 0; i <= 23; i++) {
       var hour = String(i);
       if (i < 10) {
@@ -46,6 +47,7 @@ export default class FromTo extends React.Component {
     return this.baseTimeHour() * 60 + this.baseTimeMinute()
   }
 
+  //click on drone or robot button which will result in the choice stored in state.
   chooseDrone = () => {
     this.props.setState({
       droneOrRobot: "drone"
@@ -83,6 +85,7 @@ export default class FromTo extends React.Component {
     fontWeight: '200', paddingLeft: '1vw'
   }
 
+  //arrays for dropdown size + weight
   sizes = [
     {
       value: '<50cm x 50cm x 50cm',
@@ -100,16 +103,16 @@ export default class FromTo extends React.Component {
 
   weights = [
     {
-      value: '<10kg',
-      label: '<10kg'
+      value: '<5kg(Drone)',
+      label: '<5kg(Drone)'
     },
     {
-      value: '10-30kg',
-      label: '10-30kg'
+      value: '5-10kg(Drone/Robot)',
+      label: '5-10kg(Drone/Robot)'
     },
     {
-      value: '>30kg',
-      label: '>30kg'
+      value: '>10kg(Robot)',
+      label: '>10kg(Robot)'
     },
   ]
 
@@ -125,7 +128,7 @@ export default class FromTo extends React.Component {
     this.props.setState({
       testing: false
     });
-    if (this.state.isDrone){
+    if (this.state.isDrone) {
       this.props.setState({
         estimatedDeliveryTime: this.state.robotDeliveryFee,
         totalCost: this.state.robotDeliveryFee
@@ -140,6 +143,8 @@ export default class FromTo extends React.Component {
     this.props.incrementPage(1);
   }
 
+  //This is so testers don't have to enter all the fields every time
+  //Enabled testing button near the buttom of the form to allow this.
   testOrder = () => {
     console.log('order to', {
       date: '2021-09-10T12:27:49',
@@ -186,6 +191,10 @@ export default class FromTo extends React.Component {
     this.props.incrementPage(1);
   }
 
+  //One wide input covers roughly two medium inputs + space in between.
+  //This kind of set up where one wide input goes on top
+  //and two medium inputs go beneath it and the three line up
+  //is used for sending info and receiving info and pickup time.
   render() {
     const { droneNewTime, robotNewTime, droneDeliveryFee, robotDeliveryFee }
       = this.state;
@@ -253,6 +262,7 @@ export default class FromTo extends React.Component {
             rules={[{ required: true, message: 'Please enter the package size.' }]}
             name="size"
           >
+            {/* Cascader is a dropdown containing array sizes + weights generated at constructor */}
             <Cascader options={this.sizes} placeholder="sizes" style={mediuminput} />
           </Form.Item>
           <Form.Item
@@ -324,7 +334,7 @@ export default class FromTo extends React.Component {
         </Row>
         <Form.Item style={{ left: '5vw', position: 'relative' }}>
           <Button type="primary" htmlType="submit" style={{ width: '10vw ' }}>Next</Button>
-          <Button type="button" style={{ marginLeft: '10vw' }} onClick={this.testOrder}>Test Order</Button>
+          {/* <Button type="button" style={{ marginLeft: '10vw' }} onClick={this.testOrder}>Test Order</Button> */}
         </Form.Item>
       </this.Form >
     );

@@ -3,7 +3,13 @@ import React from 'react';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { login } from "./Utils";
 
+// /login page
 class Login extends React.Component {
+  /*
+    displayModal is whether the login window is displayed or not.
+    This is controlled with handleCancel which sets it to false when user closes window,
+    and true when user clicks login button on top bar.
+  */
   state = {
     displayModal: false,
     loading: false
@@ -23,6 +29,20 @@ class Login extends React.Component {
     })
   }
 
+  /*
+    Attached to onFinish on Form, so the "data" props passed into this function is 
+    data collected from the form itself.
+    Form.Item's that have a name will be included under that name:
+    ex: 
+    <Form.Item
+      name="username"
+      rules={[{ required: true, message: 'Please input your Email!' }]}
+    >
+
+    {
+      username: {what user entered in this field}
+    }
+  */
   onFinish = (data) => {
     this.props.setUsername(data.username);
     this.setState({
@@ -71,6 +91,7 @@ class Login extends React.Component {
               rules={[{ required: true, message: 'Please input your Email!' }]}
             >
               <Input prefix={<UserOutlined />} placeholder="Email" />
+              {/* UserOutlined is a person icon to the left of the textfield */}
             </Form.Item>
             <Form.Item
               name="password"
@@ -80,6 +101,7 @@ class Login extends React.Component {
                 prefix={<LockOutlined />}
                 placeholder="Password"
               />
+              {/* LockOutlined is a padlock icon to the left of the textfield */}
 
             </Form.Item>
 

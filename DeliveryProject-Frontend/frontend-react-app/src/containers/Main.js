@@ -37,7 +37,7 @@ export default class Main extends React.Component {
         style={{
           padding: 24,
           margin: 0,
-          height: 1000,
+          height: "100vh",
         }}
       >
 
