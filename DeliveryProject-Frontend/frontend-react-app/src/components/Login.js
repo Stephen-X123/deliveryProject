@@ -7,7 +7,7 @@ import { login } from "./Utils";
 class Login extends React.Component {
   /*
     displayModal is whether the login window is displayed or not.
-    This is controlled with handleCancel which sets it to false when user closes window,
+    This is controlled with handleCancel which sets it to false when user closes window by clicking the x,
     and true when user clicks login button on top bar.
   */
   state = {

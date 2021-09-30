@@ -15,7 +15,7 @@ export default class Order extends React.Component {
     this.state = {
       current: 0,
       // Four pages (form 1 (from address to addresa and other info), form 2 (payment info),
-      // Form 3 (confirm order info is correct))
+      // Form 3 (confirm order info is correct)), last page is confirming the purchase is successful and return orderId.
       forms: [
         <FromTo incrementPage={this.incrementPage} setState={this.updateState} />,
         <PaymentInfo incrementPage={this.incrementPage} setState={this.updateState} />,
@@ -55,7 +55,8 @@ export default class Order extends React.Component {
     //convert from form induced string to int(backend takes int credit card info only)
     this.state.CreditCard.cvv = parseInt(this.state.CreditCard.cvv)
 
-    //add fields needed (by doing this remove fields that are in this.state.Order but aren't needed in the backend).
+    //add fields needed by the backend order.
+    //(by doing this remove fields that are in this.state.Order but aren't needed in the backend).
     const newOrder = {
       actualPickUpTime: date,
       fromAddress: fromAddress,
@@ -109,7 +110,7 @@ export default class Order extends React.Component {
 
   onChange = (newCurrent) => {
     if (this.state.Order == null && newCurrent >= 2) {
-      message.error("Cannot go to step 2 without completing forms at step 1 and step 0.");
+      message.error("Cannot go to step 3 without completing forms at step 1 and step 2.");
       return;
     }
     this.setState({

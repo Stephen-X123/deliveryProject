@@ -6,42 +6,7 @@ import { Spin, List, Row, Col, message } from 'antd';
 import { orderHistory } from './Utils'
 
 
-const data = [
-  {
-    'order_number': "364179604",
-    'order_status': "Order Placed",
-    'sender': "Rick Sun",
-    'recipientName': "Sean",
-    'actual_pick_up_time': "08:00 AM 08/24/2021"
-  },
 
-
-  {
-    'order_number': "777259151",
-    'order_status': "Picking Up",
-    'sender': "Rick Sun",
-    'recipientName': "Sean",
-    'actual_pick_up_time': "09:00 AM 08/25/2021"
-  },
-
-  {
-    "orderId": 75,
-    "recipientName": "SF receipt1",
-    "fromAddress": "SF 1",
-    "toAddress": "SF 2",
-    "actualPickUpTime": 1630855005000,
-    "createTime": 1631411646000,
-    "departTime": null,
-    "desiredPickedUpTime": null,
-    "deliveryTime": null,
-    "totalCost": 30.0,
-    "paymentStatus": null,
-    "orderStatus": "Delivered",
-    "weight": "2",
-    "size": "10",
-    "review": null
-  }
-];
 
 class OrderHistory extends React.Component {
   constructor(props) {
@@ -51,10 +16,12 @@ class OrderHistory extends React.Component {
     }
   }
 
+  
   componentDidMount() {
     this.updateState();
   }
 
+  //update state will set data to be list of orders once component is mounted.
   updateState = () => {
     orderHistory().then(
       (response) => {
@@ -77,6 +44,8 @@ class OrderHistory extends React.Component {
   render() {
     const { data } = this.state;
 
+    //if data is null, cannot display the list of orders, order history is added through await/async function
+    //wait as the data is loaded.
     if (data == null) {
       return this.renderloading()
     }
@@ -108,7 +77,7 @@ class OrderHistory extends React.Component {
                   </span>
                   <span>
                     <Col>
-                      <Link to="/tracking">
+                      <Link to="/tracking" onClick={() => this.props.setOrderId(item.orderId)}>
                         <h5 style={{ color: 'blue' }}>
                           Track My Order
                         </h5>
@@ -120,7 +89,6 @@ class OrderHistory extends React.Component {
                       <Link to={{
                         pathname: '/orderdetails/',
                         state: item,
-
                       }}>
                         <h5 style={{ color: 'blue' }}>
                           Order Details

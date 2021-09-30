@@ -19,6 +19,7 @@ export default class OrderComplete extends React.Component {
           </h2>
         </Row>
         <Row>
+          {/* Get id from Order.js, which gets id from backend generated id for order. */}
           <h3 style={{ position: 'relative', left: '3.5vw' }}>
             Order number: {this.props.orderId}
           </h3>

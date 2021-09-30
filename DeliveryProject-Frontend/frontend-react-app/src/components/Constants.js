@@ -38,3 +38,11 @@ export const extrawidethirdinput = {
   width: '9vw',
   backgroundColor: '#E8E8E8'
 }
+
+//I.e one wide two medium inputs arragment
+// ---------------
+// ------  -------
+
+// extrawideinput on top, extrawidehalfinput for two half text fields at the buttom
+// extrawidethirdinput works similarly to extrawidehalfinput, three text fields with margins roughly is the same width as one.
+

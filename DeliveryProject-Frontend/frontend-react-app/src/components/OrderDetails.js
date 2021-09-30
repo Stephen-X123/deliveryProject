@@ -9,30 +9,45 @@ import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-map
 import { isVar } from "@babel/types";
 
 
-// const data1 = [
-//     {'order_number' : "364179604",
-//     'created_time' : "08:00 AM 08/23/2021",
-//     'sender' : "Rick Sun",
-//     'sender_telphone': "949-123-4567",
-//     'sender_address': "800 N Alameda St, Los Angeles, CA, 90012",
-//     'receiver' : "Sean",
-//     'receiver_telephone' :'946-666-6666',
-//     'receiver_address' : '453 Spring Street, Los Angeles, CA 90013',
-//     'actual_pick_up_time' : "08:00 AM 08/24/2021",
-//     'size' : "Small (L : 10 , W : 10, H : 10)",
-//     'weight' : "Light (< 5 lb)",
-//     'deliveror' : "Drone",
-//     'deliver_time' : "9:00 AM",
-//     'fee' : "30"}
-//     ];
-
-
+//In this page, left part is text information of a sigle order
+//Right part is a map
 export default class OrderDetails extends React.Component {
 
     getdata = () => {
         return this.props.location.state
     }
 
+    getGoogleFromAddress = () => {  
+       Geocode.fromAddress(this.props.location.state.fromAddress)
+            .then(
+                (response) => {
+                    const { lat, lng } = response.results[0].geometry.location;
+                    console.log('lat long', typeof (lat), typeof (lng));
+                    this.setState({
+                        places: [...this.state.places, { latitude: lat, longitude: lng }]
+                    })
+                },
+                (error) => {
+                    console.error(error);
+                }
+            );
+    }
+
+
+    getGoogleToAddress = () => {
+        Geocode.fromAddress(this.props.location.state.toAddress)
+        .then(
+            (response) => {
+                const { lat, lng } = response.results[0].geometry.location;
+                this.setState({
+                    places: [...this.state.places, { latitude: lat, longitude: lng }]
+                })
+            },
+            (error) => {
+                console.error(error);
+            }
+        );
+    }
     componentDidMount() {
         console.log("mounting...");
         Geocode.setApiKey("AIzaSyAPerW4DlNN3JvRMUkGesnBFi6HBwpMbDs");
@@ -40,31 +55,16 @@ export default class OrderDetails extends React.Component {
         // set response language. Defaults to english.
         Geocode.setLanguage("en");
         // Get latitude & longitude from address.
-        Geocode.fromAddress(this.props.location.state.fromAddress).then(
-            (response) => {
-                const { lat, lng } = response.results[0].geometry.location;
-                console.log('lat long', typeof (lat), typeof (lng));
-                this.setState(
-                    () => {
-                        return { places: [{ latitude: lat, longitude: lng }] };
-                    }
-                )
-            },
-            (error) => {
-                console.error(error);
-            }
-        );
-        Geocode.fromAddress(this.props.location.state.toAddress).then(
-            (response) => {
-                const { lat, lng } = response.results[0].geometry.location;
-                this.setState(() => {
-                    return { places: [...this.state.places, { latitude: lat, longitude: lng }] };
-                })
-            },
-            (error) => {
-                console.error(error);
-            }
-        );
+        // Add latitude and longitude to state.places with the format
+        // {latitude: ..., longitude: ...}
+        // fromAddress is added first because it is the source
+        // toAddress is added after with the syntax ...this.state.places
+        // because it is the destination. The first member of the array
+        // is interpreted as the source, and the last as the destination later.
+        console.log('testdata', this.props.location.state)
+  
+        Promise.all([this.getGoogleFromAddress(), this.getGoogleToAddress()])
+        .catch(err => console.error(err));
     }
 
     state = {
@@ -78,21 +78,23 @@ export default class OrderDetails extends React.Component {
     }
 
     render() {
-        console.log('response');
+        //console.log('response');
         var mapUrl = "https://maps.googleapis.com/maps/api/js?"
         const key = "AIzaSyAPerW4DlNN3JvRMUkGesnBFi6HBwpMbDs"
         mapUrl += "&key=" + key;
         this.getdata();
         var data = this.getdata();
         data = [data];
-        console.log('data', data);
+        //console.log('data', data);
 
         var { places } = this.state;
+        // If places.length < 2, the two locations have not been added to this.state.places yet
         if (places.length < 2) {
             return this.renderloading()
         }
+        // A list that displays order information.
         return (
-            <>
+            <> 
                 <List
                     style={{ marginTop: '10vh', borderColor: 'transparent' }}
                     size="large"
@@ -137,10 +139,6 @@ export default class OrderDetails extends React.Component {
                             <h3 style={{ left: '2vw', position: 'absolute', top: '69vh' }}><b>Fee</b></h3>
                             <h4 style={{ left: '17vw', position: 'absolute', top: '69vh' }}>$ {item.totalCost}</h4>
 
-
-
-
-
                         </>
                     }</List.Item></div>}
                 />
@@ -159,6 +157,7 @@ export default class OrderDetails extends React.Component {
                         mapElement={<div style={{ height: `100%` }} />}
                         defaultCenter={{ lat: 37, lng: -122 }}
                         defaultZoom={7 || 11}
+                        droneOrRobot={data[0].deliveryMethod}
                     />}
             </>
         )

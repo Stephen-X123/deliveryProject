@@ -8,11 +8,9 @@ import {
 
 import Main from '../containers/Main';
 import Nav from '../containers/Nav';
-import Test from './Test';
 import Tracking from './Tracking'
 import Order from './Order'
 import OrderHistory from './OrderHistory'
-import Profile from './Profile'
 import OrderDetails from './OrderDetails'
 
 
@@ -24,7 +22,6 @@ export default function App() {
 
     const routes = () => {
         return <Switch>
-            <Route path="/profile" component={Profile} />
             <Route path="/orderhistory" render={() => <OrderHistory username={username} setOrderId={setOrderId} />}>
                 {loggedIn ? <OrderHistory username={username} setOrderId={setOrderId} /> : <Redirect to="/" />}
             </Route>
@@ -33,7 +30,6 @@ export default function App() {
                 {loggedIn ? <Order /> : <Redirect to="/" />}
             </Route>
             <Route path="/orderdetails" component={OrderDetails} />
-            <Route path="/test" component={Test} />
             <Route path="/" render={() => <Main setOrderId={setOrderId} loggedIn={loggedIn} />} />
         </Switch>
     }

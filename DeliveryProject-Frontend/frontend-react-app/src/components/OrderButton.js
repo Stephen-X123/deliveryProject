@@ -6,6 +6,7 @@ export default class OrderButton extends React.Component {
   //background color -> '#08142c' would be ok if you want to chagne orders button.
   //However, the outline is still white, which makes it ugly anyways
 
+  //Called from nav bar (when user is logged in)
   render() {
     return (
       <Link to="/orderhistory">
