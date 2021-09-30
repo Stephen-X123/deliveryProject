@@ -44,6 +44,9 @@ export default function App() {
                 <Nav setUsername={setUsername}
                     setLoggedIn={setLoggedIn}
                     username={username}
+                    style={{
+                        height: "10vh"
+                    }}
                 />
                 {routes()}
             </div>

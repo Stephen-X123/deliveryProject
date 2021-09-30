@@ -11,6 +11,9 @@ const center = {
   lng: -38.523
 };
 
+/*
+  Obselete class. No use for this.
+*/
 class Map extends Component {
   render() {
     return (

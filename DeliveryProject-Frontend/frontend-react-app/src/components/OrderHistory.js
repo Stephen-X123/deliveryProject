@@ -76,7 +76,7 @@ class OrderHistory extends React.Component {
 
   render() {
     const { data } = this.state;
-    console.log('DATA', data);
+
     if (data == null) {
       return this.renderloading()
     }
@@ -97,7 +97,7 @@ class OrderHistory extends React.Component {
               <span style={{ marginBottom: '1vh' }}>
                 <Row justify="space-between">
                   <Col><h4 style={{ left: '0vw', postion: 'absolute' }}><b>Order Number</b> {item.orderId}</h4></Col>
-                  <Col><h4 style={{ left: '30vw', postion: 'absolute' }}><b>From</b> {item.sender}</h4></Col>
+                  <Col><h4 style={{ left: '30vw', postion: 'absolute' }}><b>From</b> {item.senderName}</h4></Col>
                   <Col><h4 style={{ right: '0vw', postion: 'absolute' }}><b>To</b> {item.recipientName}</h4></Col>
                 </Row>
                 <hr style={{ width: '73vw', color: 'black', left: '-5vw' }} />
@@ -108,16 +108,26 @@ class OrderHistory extends React.Component {
                   </span>
                   <span>
                     <Col>
-                      <Link to="/tracking" onClick={() => this.props.setOrderId(item.orderId)}>
+                      <Link to="/tracking">
                         <h5 style={{ color: 'blue' }}>
                           Track My Order
                         </h5>
                       </Link>
-                      <Link to="/orderdetails">
+
+                      {/* var data = item
+                      data = JSON.stringify(data)
+                      var path = `/orderdetails/${data}`; */}
+                      <Link to={{
+                        pathname: '/orderdetails/',
+                        state: item,
+
+                      }}>
                         <h5 style={{ color: 'blue' }}>
                           Order Details
                         </h5>
                       </Link>
+                      {/* hashHistory.push(path); */}
+
                     </Col>
                   </span>
                 </Row>

@@ -14,18 +14,22 @@ export default class Order extends React.Component {
     super(props)
     this.state = {
       current: 0,
+      // Four pages (form 1 (from address to addresa and other info), form 2 (payment info),
+      // Form 3 (confirm order info is correct))
       forms: [
         <FromTo incrementPage={this.incrementPage} setState={this.updateState} />,
         <PaymentInfo incrementPage={this.incrementPage} setState={this.updateState} />,
         <Confirmation setState={this.updateState} completeForm={this.completeForm}
           order={this.state.Order} droneOrRobot={this.state.droneOrRobot} />
       ],
+      //If form complete, turn to form complete page.
       formComplete: false,
       testing: false
     }
   }
 
   //current will be 0,1,2. Because antd steps component assigns each step to incrementing current's.
+  //Each number corresponds to a form (0/1/2)=>(FromTo.js/PaymentInfo.js/Confirmation.js)
   state = {
     current: 0,
   }
@@ -39,12 +43,19 @@ export default class Order extends React.Component {
   // private String lastName;
   // private String zipCode;
   // private String address;
+
+  //When the form is completed on OrderComplete.js, clicking submit will result in 
+  //this function being called, which will collect all the form information from 0,1,2 pages
+  //which is collected on this.state.Order and reorganize it to be sent to the backend.
   completeForm = () => {
     console.log('Order Here:', this.state.Order)
     const { date, fromAddress, orderStatus, size, toAddress, totalCost, packageWeight,
       sendingName, sendingPhone, receivingPhone, recipientName } = this.state.Order;
 
+    //convert from form induced string to int(backend takes int credit card info only)
     this.state.CreditCard.cvv = parseInt(this.state.CreditCard.cvv)
+
+    //add fields needed (by doing this remove fields that are in this.state.Order but aren't needed in the backend).
     const newOrder = {
       actualPickUpTime: date,
       fromAddress: fromAddress,
@@ -61,6 +72,7 @@ export default class Order extends React.Component {
       estimatedDeliveryTime: this.state.estimatedDeliveryTime,
       totalCost: this.state.totalCost
     };
+    //checking that order that is sent back has correct format
     console.log('order to backend', {
       order: newOrder,
       credit_card: this.state.CreditCard
@@ -74,6 +86,8 @@ export default class Order extends React.Component {
           formComplete: true
         });
         message.success('Order complete!');
+        //backend generates orderId from new order added and we attach it to orderId to be displayed in
+        //order complete page.
         this.setState({
           orderId: data
         });
@@ -85,6 +99,7 @@ export default class Order extends React.Component {
     )
   }
 
+  //Give ability to edit order's state to other components(This is probably bad practice), if you pass this function.
   updateState = (newState) => {
     //console.log('updatestate', newState);
     //console.log('old state', this.state);
@@ -92,21 +107,11 @@ export default class Order extends React.Component {
     //console.log('after set state', this.state)
   }
 
-  fromToForm2 =
-    (<Form>
-      <Form.Item>
-        <h2>
-          From
-        </h2>
-      </Form.Item>
-      <Form.Item
-        rules={[{ required: true, message: 'Please enter the sending address.' }]}
-      >
-        <Input placeholder="Address" />
-      </Form.Item>
-    </Form>)
-
   onChange = (newCurrent) => {
+    if (this.state.Order == null && newCurrent >= 2) {
+      message.error("Cannot go to step 2 without completing forms at step 1 and step 0.");
+      return;
+    }
     this.setState({
       current: newCurrent,
     });
@@ -122,6 +127,7 @@ export default class Order extends React.Component {
     }
   }
 
+  //This function is passed to other components, so they may modify which page of the order component they are on.
   incrementPage = (increment) => {
     this.setState({
       current: this.state.current + increment,
@@ -141,6 +147,7 @@ export default class Order extends React.Component {
     return (
       !formComplete ?
         <div className="order-background" >
+          {/* Bar on the right to select steps */}
           <Steps current={current} onChange={this.onChange} direction="vertical" className="steps">
             <Step title="Step 1" description="Address + Package + Pickup time" />
             <Step title="Step 2" description="Payment Information" />
